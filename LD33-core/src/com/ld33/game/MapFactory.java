@@ -15,8 +15,8 @@ public class MapFactory {
 		int x = 0;
 		int y = getMapHeight(mapString)-1;
 		Tile t = null;
-		float w = app.getAssets().GrassRegion.getWidth();
-		float h = app.getAssets().GrassRegion.getHeight();
+		float w = app.getAssets().grassTileRegion.getWidth();
+		float h = app.getAssets().grassTileRegion.getHeight();
 		
 		for(int i=0; i<mapString.length(); i++) {
 			final char ch = mapString.charAt(i);
@@ -30,10 +30,10 @@ public class MapFactory {
 			TextureRegionExt region = null;
 			
 			if(mapString.charAt(i) == '#') {
-				region = app.getAssets().WallRegion;
+				region = app.getAssets().wallRegion;
 			}
 			else if(mapString.charAt(i) == '.') {
-				region = app.getAssets().GrassRegion;
+				region = app.getAssets().grassTileRegion;
 			}
 			
 			t = new Tile(mapString.charAt(i), region);

@@ -4,11 +4,13 @@ Textures folder found...
 Creating ATLAS profile for referenceName name: Block
 Creating REGION profile for referenceName name: block
 Creating ATLAS profile for referenceName name: Game
-Creating REGION profile for referenceName name: Grass
-Creating REGION profile for referenceName name: Sand
-Creating REGION profile for referenceName name: Tower
-Creating REGION profile for referenceName name: Wall
+Creating REGION profile for referenceName name: grassTile
 Creating REGION profile for referenceName name: largefont
+Creating REGION profile for referenceName name: mainCharacter
+Creating REGION profile for referenceName name: minion
+Creating REGION profile for referenceName name: sandTile
+Creating REGION profile for referenceName name: tower
+Creating REGION profile for referenceName name: wall
 Full path: /Users/Paulius/LD33/LD33-android
 Folder name: LD33-android
 Project name: LD33
