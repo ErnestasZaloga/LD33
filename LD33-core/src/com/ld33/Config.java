@@ -22,6 +22,6 @@ public final class Config {
 	public static final float BoltTowerHealth = 15f;
 	public static final float BoltTowerRange = 100;
 	public static final float BoltTowerDamage = 2;
-	public static final float BoltTowerAttackInterval = 1500;
+	public static final float BoltTowerAttackInterval = 1.5f;
 	
 }

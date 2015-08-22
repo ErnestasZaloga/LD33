@@ -2,6 +2,7 @@ package com.ld33.game;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.ld33.App;
+import com.ld33.game.environment.EnvironmentManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.Tile;
 import com.ld33.game.pawn.PawnManager;
@@ -11,6 +12,7 @@ public class GameWorld extends Group {
 	private App app;
 	private MapData mapData;
 	private PawnManager pawnManager;
+	private EnvironmentManager environmentManager;
 	
 	public GameWorld(App app) {
 		this.app = app;
@@ -27,12 +29,15 @@ public class GameWorld extends Group {
 				mapData.getMapH() * app.getAssets().tileHeight);
 		
 		pawnManager.populateWorld(this);
+		
+		environmentManager = new EnvironmentManager(pawnManager, mapData);
 	}
 	
 	@Override
 	public void act(final float delta) {
 		super.act(delta);
 		pawnManager.update(delta);
+		environmentManager.update(delta);
 	}
 	
 }
