@@ -18,13 +18,8 @@ public final class GameScreen extends BaseScreen {
 		
 		gameWorld = new GameWorld(app);
 		addActor(gameWorld);
-	}
-	
-	@Override
-	public void setSize(final float width,
-						final float height) {
 		
-		super.setSize(width, height);
+		gameWorld.setSize(getWidth(), getHeight());
 	}
 	
 }

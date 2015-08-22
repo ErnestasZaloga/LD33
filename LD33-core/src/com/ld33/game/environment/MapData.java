@@ -1,20 +1,23 @@
 package com.ld33.game.environment;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.ld33.App;
 
 public class MapData {
 	
-	private Array<Tile> tiles;
-	private Array<TileObject> tileObjects = new Array<TileObject>();
+	private final Array<Tile> tiles;
+	private final Array<TileObject> tileObjects;
 	private final int mapW;
 	private final int mapH;
 
-	public MapData(App app) {
-		tiles = MapFactory.generateMap(app, Gdx.files.internal("maps/map1.txt").readString(), tileObjects);
-		mapW = MapFactory.getMapWidth(Gdx.files.internal("maps/map1.txt").readString());
-		mapH = MapFactory.getMapHeight(Gdx.files.internal("maps/map1.txt").readString());
+	public MapData(final Array<Tile> tiles,
+				   final int mapWidth,
+				   final int mapHeight,
+				   final Array<TileObject> tileObjects) {
+		
+		this.tiles = tiles;
+		this.mapW = mapWidth;
+		this.mapH = mapHeight;
+		this.tileObjects = tileObjects;
 	}
 	
 	public Array<Tile> getTiles() {
@@ -26,12 +29,13 @@ public class MapData {
 	}
 	
 	public Tile getTileAtXYIndex(int x, int y) {
-		for(Tile t : tiles) {
-			if(t.getxIndex() == x && t.getyIndex() == y) {
-				return t;
-			}
+		if(x < 0 || x >= mapW) {
+			throw new RuntimeException("Invalid x: " + x + " for map width " + mapW);
 		}
-		return null;
+		if(y < 0 || y >= mapH) {
+			throw new RuntimeException("Invalid y: " + y + " for map height " + mapH);
+		}
+		return tiles.get(y * mapW + x);
 	}
 
 	public int getMapW() {

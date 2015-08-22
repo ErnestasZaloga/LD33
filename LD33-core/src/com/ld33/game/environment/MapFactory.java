@@ -7,80 +7,63 @@ import com.workforfood.devkit.TextureRegionExt;
 
 public class MapFactory {
 	
-	private MapFactory() {
-	}
-	
-	public static Array<Tile> generateMap(final App app, String mapString, Array<TileObject> tileObjects) {
-		Array<Tile> tiles = new Array<Tile>();
+	public static MapData generateMap(final App app,
+									  final String mapString) {
 		
+		final String[] lines = mapString.split("\\r?\\n");
+		
+		final int mapWidth = lines[0].length();
+		final int mapHeight = lines.length;
+		
+		final Array<Tile> tiles = new Array<Tile>();
+		final Array<TileObject> tileObjects = new Array<TileObject>();
+		
+		final float tileWidth = app.getAssets().tileWidth;
+		final float tileHeight = app.getAssets().tileHeight;
+		
+		Tile tile = null;
 		int x = 0;
-		int y = getMapHeight(mapString)-1;
-		Tile t = null;
-		float w = app.getAssets().grassTileRegion.getWidth();
-		float h = app.getAssets().grassTileRegion.getHeight();
+		int y = 0;
 		
-		for(int i=0; i<mapString.length(); i++) {
-			final char ch = mapString.charAt(i);
+		for(int i = lines.length - 1; i >= 0; i -= 1) {
+			final String line = lines[i];
 			
-			if(ch == '\n') {
-				x = 0;
-				y--;
-				continue;
+			for(int ii = 0; ii < line.length(); ii += 1) {
+				final char ch = line.charAt(ii);
+				
+				final TextureRegionExt region;
+				
+				if(ch == Config.WallTile) {
+					region = app.getAssets().wallRegion;
+					tile = new Tile(ch, region);
+				}
+				else if(ch == Config.GrassTile) {
+					region = app.getAssets().grassTileRegion;
+					tile = new Tile(ch, region);
+				}
+				else if(ch == Config.BoltTower) {
+					region = app.getAssets().towerRegion;
+					tile = new TileObject(ch, region);
+					tileObjects.add((TileObject) tile);
+				}
+				else {
+					throw new RuntimeException("Invalid map character found: " + ch);
+				}
+				
+				tile.setPosition(x * tileWidth, y * tileHeight);
+				tile.setxIndex(x);
+				tile.setyIndex(y);
+				
+				x += 1;
+				
+				tiles.add(tile);
 			}
 			
-			TextureRegionExt region = null;
-			
-			if(mapString.charAt(i) == Config.WallTile) {
-				region = app.getAssets().wallRegion;
-				t = new Tile(mapString.charAt(i), region);
-			}
-			else if(mapString.charAt(i) == Config.GrassTile) {
-				region = app.getAssets().grassTileRegion;
-				t = new Tile(mapString.charAt(i), region);
-			}
-			else if(mapString.charAt(i) == Config.BoltTower) {
-				region = app.getAssets().towerRegion;
-				t = new TileObject(mapString.charAt(i), region);
-				tileObjects.add((TileObject)t);
-			}
-			
-			t.setPosition(x*w, y*h);
-			t.setxIndex(x);
-			t.setyIndex(y);
-			x++;
-			
-			tiles.add(t);
+			x = 0;
+			y += 1;
 		}
 			
-		return tiles;
-	}
-	
-	public static int getMapWidth(String mapString) {
-		char input = mapString.charAt(0);
-		int mapW = 0;
-		while(true) {
-			input = mapString.charAt(mapW);
-			if(input == '\n') {
-				break;
-			}
-			mapW++;
-		}
-		return mapW;
-	}
-	
-	public static int getMapHeight(String mapString) {
-		char input = mapString.charAt(0);
-		int mapW = 0;
-		int mapH = 0;
-		while(true) {
-			input = mapString.charAt(mapW);
-			if(input == '\n') {
-				break;
-			}
-			mapW++;
-		}
-		mapH = mapString.length()/mapW;
-		return mapH;
+		return new MapData(tiles, mapWidth, mapHeight, tileObjects);
 	}
 	
 }

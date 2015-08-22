@@ -1,9 +1,9 @@
 package com.ld33.game.pawn;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.ld33.App;
 import com.ld33.Config;
-import com.ld33.game.GameWorld;
 
 public final class PawnManager {
 
@@ -79,8 +79,8 @@ public final class PawnManager {
 		}
 	}
 	
-	public void populateWorld(final GameWorld world) {
-		world.addActor(player);
+	public void populate(final Group destination) {
+		destination.addActor(player);
 	}
 	
 }

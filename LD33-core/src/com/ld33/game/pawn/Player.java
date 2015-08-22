@@ -6,6 +6,7 @@ import com.ld33.Config;
 import com.ld33.utils.steps.FloatStep;
 import com.ld33.utils.steps.Steps;
 
+// TODO: minions
 public final class Player extends Pawn {
 
 	private final App app;
