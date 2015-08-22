@@ -21,7 +21,6 @@ public class MapFactory {
 		final float tileWidth = app.getAssets().tileWidth;
 		final float tileHeight = app.getAssets().tileHeight;
 		
-		Tile tile = null;
 		int x = 0;
 		int y = 0;
 		
@@ -32,6 +31,7 @@ public class MapFactory {
 				final char ch = line.charAt(ii);
 				
 				final TextureRegionExt region;
+				Tile tile = null;
 				
 				if(ch == Config.WallTile) {
 					region = app.getAssets().wallRegion;

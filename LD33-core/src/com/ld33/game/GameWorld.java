@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
+import com.ld33.game.environment.EnvironmentManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.MapFactory;
 import com.ld33.game.environment.Tile;
@@ -16,8 +17,11 @@ public class GameWorld extends Group {
 	private App app;
 	private MapData mapData;
 	private PawnManager pawnManager;
+	private EnvironmentManager environmentManager;
+	private ProjectileManager projectileManager;
 	
-	private final Group contentGroup = new Group();
+	private final Array<ManagerInterface> managers = new Array<ManagerInterface>();
+	protected final Group contentGroup = new Group();
 	
 	public GameWorld(App app) {
 		this.app = app;
@@ -46,9 +50,18 @@ public class GameWorld extends Group {
 			contentGroup.addActor(tile);
 		}
 		
+		// Init managers
+		
 		pawnManager = new PawnManager(app);
 		pawnManager.setBounds(contentGroup.getWidth(), contentGroup.getHeight());
 		pawnManager.populate(contentGroup);
+		
+		environmentManager = new EnvironmentManager(this, pawnManager, mapData);
+		projectileManager = new ProjectileManager(app, this);
+		
+		managers.add(pawnManager);
+		managers.add(environmentManager);
+		managers.add(projectileManager);
 	}
 	
 	@Override
@@ -56,6 +69,7 @@ public class GameWorld extends Group {
 		super.act(delta);
 		
 		pawnManager.update(delta);
+		environmentManager.update(delta);
 		
 		final Player player = pawnManager.getPlayer();
 		
@@ -114,6 +128,10 @@ public class GameWorld extends Group {
 		
 		super.setSize(width, height);
 		contentGroup.getCullingArea().setSize(width, height);
+	}
+	
+	public ProjectileManager getProjectileManager() {
+		return projectileManager;
 	}
 	
 }

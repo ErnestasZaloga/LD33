@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.ld33.App;
 import com.ld33.Config;
+import com.ld33.game.ManagerInterface;
 
-public final class PawnManager {
+public final class PawnManager implements ManagerInterface {
 
 	private final App app;
 	private final Player player;

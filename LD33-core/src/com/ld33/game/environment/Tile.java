@@ -6,13 +6,11 @@ import com.workforfood.devkit.TextureRegionExt;
 public class Tile extends SpriteActor {
 	
 	protected char type;
-	private TextureRegionExt textureRegionExt;
 	private int xIndex;
 	private int yIndex;
 	
 	public Tile(char type, TextureRegionExt textureRegionExt) {
 		this.type = type;
-		this.textureRegionExt = textureRegionExt;
 		setRegion(textureRegionExt);
 	}
 
