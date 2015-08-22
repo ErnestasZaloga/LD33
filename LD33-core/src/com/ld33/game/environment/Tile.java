@@ -1,11 +1,11 @@
-package com.ld33.game;
+package com.ld33.game.environment;
 
 import com.ld33.utils.SpriteActor;
 import com.workforfood.devkit.TextureRegionExt;
 
 public class Tile extends SpriteActor {
 	
-	private char type;
+	protected char type;
 	private TextureRegionExt textureRegionExt;
 	private int xIndex;
 	private int yIndex;
