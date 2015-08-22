@@ -1,10 +1,6 @@
 package com.ld33.game.environment;
 
 import com.ld33.Config;
-<<<<<<< Updated upstream
-import com.workforfood.devkit.TextureRegionExt;
-=======
->>>>>>> Stashed changes
 
 public class TileObject extends Tile {
 
