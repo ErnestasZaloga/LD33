@@ -11,18 +11,12 @@ public class MapFactory {
 	
 	public static Array<Tile> generateMap(final App app, String mapString) {
 		Array<Tile> tiles = new Array<Tile>();
+		
 		int x = 0;
-		int y = 4;
+		int y = getMapHeight(mapString)-1;
 		Tile t = null;
 		float w = app.getAssets().GrassRegion.getWidth();
 		float h = app.getAssets().GrassRegion.getHeight();
-		
-		char input = ' ';
-		int mapW = 0;
-		while(input != '\n') {
-			//mapString.charAt(index);
-			break;
-		}
 		
 		for(int i=0; i<mapString.length(); i++) {
 			final char ch = mapString.charAt(i);
@@ -44,12 +38,42 @@ public class MapFactory {
 			
 			t = new Tile(mapString.charAt(i), region);
 			t.setPosition(x*w, y*h);
+			t.setxIndex(x);
+			t.setyIndex(y);
 			x++;
 			
 			tiles.add(t);
 		}
 			
 		return tiles;
+	}
+	
+	public static int getMapWidth(String mapString) {
+		char input = mapString.charAt(0);
+		int mapW = 0;
+		while(true) {
+			input = mapString.charAt(mapW);
+			if(input == '\n') {
+				break;
+			}
+			mapW++;
+		}
+		return mapW;
+	}
+	
+	public static int getMapHeight(String mapString) {
+		char input = mapString.charAt(0);
+		int mapW = 0;
+		int mapH = 0;
+		while(true) {
+			input = mapString.charAt(mapW);
+			if(input == '\n') {
+				break;
+			}
+			mapW++;
+		}
+		mapH = mapString.length()/mapW;
+		return mapH;
 	}
 	
 }
