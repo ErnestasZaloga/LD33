@@ -66,12 +66,16 @@ public final class PawnManager {
 		else if(player.getX() < 0f) {
 			player.setX(0f);
 		}
+
+		// Special handling for y because of the animation
+		final float playerY = player.getPlaneY();
+		final float playerTop = playerY + player.getHeight();
 		
-		if(player.getTop() > boundsHeight) {
-			player.setY(boundsHeight - player.getHeight());
+		if(playerTop > boundsHeight) {
+			player.setY(boundsHeight - player.getHeight() + player.getJumpDisplacement());
 		}
-		else if(player.getY() < 0f) {
-			player.setY(0f);
+		else if(playerY < 0f) {
+			player.setY(player.getJumpDisplacement());
 		}
 	}
 	

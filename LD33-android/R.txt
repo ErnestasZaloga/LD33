@@ -10,6 +10,7 @@ Creating REGION profile for referenceName name: grassTile
 Creating REGION profile for referenceName name: largefont
 Creating REGION profile for referenceName name: mainCharacter
 Creating REGION profile for referenceName name: minion
+Creating REGION profile for referenceName name: projectile
 Creating REGION profile for referenceName name: sandTile
 Creating REGION profile for referenceName name: tile
 Creating REGION profile for referenceName name: tower

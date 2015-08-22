@@ -21,6 +21,7 @@ public abstract class RAssets extends BaseAssets {
 	public final TextureRegionExt largefontRegion;
 	public final TextureRegionExt mainCharacterRegion;
 	public final TextureRegionExt minionRegion;
+	public final TextureRegionExt projectileRegion;
 	public final TextureRegionExt sandTileRegion;
 	public final TextureRegionExt tileRegion;
 	public final TextureRegionExt towerRegion;
@@ -76,6 +77,7 @@ public abstract class RAssets extends BaseAssets {
 		largefontRegion = GameAtlas.find("largefont");
 		mainCharacterRegion = GameAtlas.find("mainCharacter");
 		minionRegion = GameAtlas.find("minion");
+		projectileRegion = GameAtlas.find("projectile");
 		sandTileRegion = GameAtlas.find("sandTile");
 		tileRegion = GameAtlas.find("tile");
 		towerRegion = GameAtlas.find("tower");

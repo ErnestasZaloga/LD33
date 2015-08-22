@@ -32,6 +32,14 @@ public final class Player extends Pawn {
 		setRegion(app.getAssets().mainCharacterRegion);
 	}
 	
+	public float getPlaneY() {
+		return getY() - (getHeight() * Config.PLAYER_ANIM_JUMP_HEIGHT) * modY;
+	}
+	
+	public float getJumpDisplacement() {
+		return getHeight() * Config.PLAYER_ANIM_JUMP_HEIGHT * modY;
+	}
+	
 	public void startMoveLeft() {
 		setMovementState(-1, verticalMovementState);
 	}
