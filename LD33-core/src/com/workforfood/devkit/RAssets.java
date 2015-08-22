@@ -15,13 +15,15 @@ public abstract class RAssets extends BaseAssets {
 
 	protected final AtlasResource GameAtlas;
 
+	public final TextureRegionExt boxRegion;
+	public final TextureRegionExt wallRegion;
 	public final TextureRegionExt grassTileRegion;
 	public final TextureRegionExt largefontRegion;
 	public final TextureRegionExt mainCharacterRegion;
 	public final TextureRegionExt minionRegion;
 	public final TextureRegionExt sandTileRegion;
+	public final TextureRegionExt tileRegion;
 	public final TextureRegionExt towerRegion;
-	public final TextureRegionExt wallRegion;
 
 
 	// *************************
@@ -68,13 +70,15 @@ public abstract class RAssets extends BaseAssets {
 
 		GameAtlas = loadAtlas("Game");
 
+		boxRegion = GameAtlas.find("box");
+		wallRegion = GameAtlas.find("wall");
 		grassTileRegion = GameAtlas.find("grassTile");
 		largefontRegion = GameAtlas.find("largefont");
 		mainCharacterRegion = GameAtlas.find("mainCharacter");
 		minionRegion = GameAtlas.find("minion");
 		sandTileRegion = GameAtlas.find("sandTile");
+		tileRegion = GameAtlas.find("tile");
 		towerRegion = GameAtlas.find("tower");
-		wallRegion = GameAtlas.find("wall");
 
 
 		// *************************
