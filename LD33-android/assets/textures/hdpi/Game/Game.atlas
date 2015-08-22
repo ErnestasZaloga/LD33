@@ -1,68 +1,75 @@
 
 Game.png
-size: 326,405
+size: 251,523
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 box
   rotate: false
-  xy: 252, 325
+  xy: 1, 52
   size: 64, 79
   orig: 64, 79
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 252, 325
+  xy: 1, 52
   size: 64, 79
   orig: 64, 79
   offset: 0, 0
   index: -1
 grassTile
   rotate: false
-  xy: 252, 259
+  xy: 67, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 largefont
   rotate: false
-  xy: 1, 15
+  xy: 1, 133
   size: 249, 389
   orig: 249, 389
   offset: 0, 0
   index: -1
 mainCharacter
   rotate: false
-  xy: 252, 1
+  xy: 199, 73
   size: 48, 58
   orig: 48, 58
   offset: 0, 0
   index: -1
 minion
   rotate: false
-  xy: 302, 31
+  xy: 1, 22
   size: 23, 28
   orig: 23, 28
   offset: 0, 0
   index: -1
+projectile
+  rotate: false
+  xy: 199, 67
+  size: 4, 4
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
 sandTile
   rotate: false
-  xy: 252, 193
+  xy: 67, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tile
   rotate: false
-  xy: 252, 127
+  xy: 133, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tower
   rotate: false
-  xy: 252, 61
+  xy: 133, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
