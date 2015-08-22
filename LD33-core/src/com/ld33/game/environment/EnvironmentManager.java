@@ -31,7 +31,7 @@ public class EnvironmentManager implements ManagerInterface {
 			if(distanceBetween(towerX, towerY, playerX, playerY) <= tileObject.getRange()) {
 				if(tileObject.canAttack()) {
 					tileObject.startCooldown();
-					gameWorld.getProjectileManager().createBolt(towerX, towerY, playerX, playerY);
+					gameWorld.getProjectileManager().createBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
 				}
 			}
 		}
