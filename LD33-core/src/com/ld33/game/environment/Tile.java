@@ -1,33 +1,35 @@
 package com.ld33.game.environment;
 
 import com.ld33.utils.SpriteActor;
-import com.workforfood.devkit.TextureRegionExt;
 
 public class Tile extends SpriteActor {
 	
-	protected char type;
-	private int xIndex;
-	private int yIndex;
+	protected final char type;
+	private final int xIndex;
+	private final int yIndex;
+	private final boolean collidable;
 	
-	public Tile(char type, TextureRegionExt textureRegionExt) {
+	public Tile(final char type,
+				final int xIndex,
+				final int yIndex,
+				final boolean collidable) {
+		
 		this.type = type;
-		setRegion(textureRegionExt);
+		this.xIndex = xIndex;
+		this.yIndex = yIndex;
+		this.collidable = collidable;
 	}
 
-	public int getxIndex() {
+	public int getXIndex() {
 		return xIndex;
 	}
 
-	public void setxIndex(int xIndex) {
-		this.xIndex = xIndex;
-	}
-
-	public int getyIndex() {
+	public int getYIndex() {
 		return yIndex;
 	}
 
-	public void setyIndex(int yIndex) {
-		this.yIndex = yIndex;
+	public boolean isCollidable() {
+		return collidable;
 	}
 	
 }

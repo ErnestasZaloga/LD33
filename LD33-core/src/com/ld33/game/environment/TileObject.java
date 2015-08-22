@@ -1,7 +1,10 @@
 package com.ld33.game.environment;
 
 import com.ld33.Config;
+<<<<<<< Updated upstream
 import com.workforfood.devkit.TextureRegionExt;
+=======
+>>>>>>> Stashed changes
 
 public class TileObject extends Tile {
 
@@ -11,8 +14,11 @@ public class TileObject extends Tile {
 	private float attackInterval;
 	private float timeUntilAttack = 0;
 	
-	public TileObject(char type, TextureRegionExt textureRegionExt) {
-		super(type, textureRegionExt);
+	public TileObject(final char type,
+					  final int xIndex,
+					  final int yIndex) {
+		
+		super(type, xIndex, yIndex, true);
 		setStats();
 	}
 	

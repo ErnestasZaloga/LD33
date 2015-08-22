@@ -4,10 +4,10 @@ import com.badlogic.gdx.Input.Keys;
 
 public final class Config {
 
-
 	public static final char WallTile = '#';
 	public static final char GrassTile = '.';
 	public static final char BoltTower = 'x';
+	public static final char PlayerStartPosition = '@';
 
 	public static final float PLAYER_TPS = 2f; // Player's tiles per second movement
 	public static final float PLAYER_ANIM_JUMP_DURATION = 0.2f;

@@ -21,13 +21,13 @@ public class MapFactory {
 		final float tileWidth = app.getAssets().tileWidth;
 		final float tileHeight = app.getAssets().tileHeight;
 		
-		int x = 0;
-		int y = 0;
+		int startX = -1;
+		int startY = -1;
 		
-		for(int i = lines.length - 1; i >= 0; i -= 1) {
+		for(int i = lines.length - 1, y = 0; i >= 0; i -= 1, y += 1) {
 			final String line = lines[i];
 			
-			for(int ii = 0; ii < line.length(); ii += 1) {
+			for(int ii = 0, x = 0; ii < line.length(); ii += 1, x += 1) {
 				final char ch = line.charAt(ii);
 				
 				final TextureRegionExt region;
@@ -35,35 +35,46 @@ public class MapFactory {
 				
 				if(ch == Config.WallTile) {
 					region = app.getAssets().wallRegion;
-					tile = new Tile(ch, region);
+					tile = new Tile(ch, x, y, true);
 				}
 				else if(ch == Config.GrassTile) {
 					region = app.getAssets().grassTileRegion;
-					tile = new Tile(ch, region);
+					tile = new Tile(ch, x, y, false);
 				}
 				else if(ch == Config.BoltTower) {
+					final TileObject tower = new TileObject(ch, x, y);
+					
 					region = app.getAssets().towerRegion;
-					tile = new TileObject(ch, region);
-					tileObjects.add((TileObject) tile);
+					tile = tower;
+					tileObjects.add(tower);
+				}
+				else if(ch == Config.PlayerStartPosition) {
+					if(startX != -1 || startY != -1) {
+						throw new RuntimeException("Player position already set");
+					}
+					
+					startX = x;
+					startY = y;
+					
+					region = app.getAssets().grassTileRegion;
+					tile = new Tile(ch, x, y, false);
 				}
 				else {
 					throw new RuntimeException("Invalid map character found: " + ch);
 				}
 				
+				tile.setRegion(region);
 				tile.setPosition(x * tileWidth, y * tileHeight);
-				tile.setxIndex(x);
-				tile.setyIndex(y);
-				
-				x += 1;
 				
 				tiles.add(tile);
 			}
-			
-			x = 0;
-			y += 1;
 		}
-			
-		return new MapData(tiles, mapWidth, mapHeight, tileObjects);
+
+		if(startX == -1 || startY == -1) {
+			throw new RuntimeException("Start position not found");
+		}
+		
+		return new MapData(tiles, mapWidth, mapHeight, tileObjects, startX, startY);
 	}
 	
 }

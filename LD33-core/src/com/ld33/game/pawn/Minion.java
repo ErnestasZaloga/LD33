@@ -14,4 +14,5 @@ public final class Minion extends Pawn {
 		this.player = player;
 	}
 	
+	
 }

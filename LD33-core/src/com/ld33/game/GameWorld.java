@@ -35,8 +35,8 @@ public class GameWorld extends Group {
 		mapData = MapFactory.generateMap(app, Gdx.files.internal("maps/map1.txt").readString());
 		
 		contentGroup.setSize(
-				mapData.getMapW() * app.getAssets().tileWidth,
-				mapData.getMapH() * app.getAssets().tileHeight);
+				mapData.getMapWidth() * app.getAssets().tileWidth,
+				mapData.getMapHeight() * app.getAssets().tileHeight);
 		
 		// Fill map with tiles
 		final Array<Tile> tiles = mapData.getTiles();
@@ -52,7 +52,7 @@ public class GameWorld extends Group {
 		
 		// Init managers
 		
-		pawnManager = new PawnManager(app);
+		pawnManager = new PawnManager(app, mapData);
 		pawnManager.setBounds(contentGroup.getWidth(), contentGroup.getHeight());
 		pawnManager.populate(contentGroup);
 		
@@ -122,6 +122,7 @@ public class GameWorld extends Group {
 			player.setZIndex(mapData.getTileAtXYIndex(rightTileX, tileY).getZIndex() + 1);
 		}
 		
+		// Update culling position
 		contentGroup.getCullingArea().setPosition(-contentGroup.getX(), -contentGroup.getY());
 	}
 	
