@@ -2,6 +2,8 @@ package com.ld33.game;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.ld33.App;
+import com.ld33.game.environment.MapData;
+import com.ld33.game.environment.Tile;
 import com.ld33.game.pawn.PawnManager;
 
 public class GameWorld extends Group {
@@ -21,8 +23,8 @@ public class GameWorld extends Group {
 		
 		pawnManager = new PawnManager(app);
 		pawnManager.setBounds(
-				mapData.getMapH() * app.getAssets().tileRegion.getHeight(),
-				mapData.getMapH() * app.getAssets().tileRegion.getHeight());
+				mapData.getMapW() * app.getAssets().tileWidth,
+				mapData.getMapH() * app.getAssets().tileHeight);
 		
 		pawnManager.populateWorld(this);
 	}

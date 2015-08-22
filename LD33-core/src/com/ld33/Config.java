@@ -16,4 +16,10 @@ public final class Config {
 	public static final int MOVE_DOWN_KEY = Keys.S;
 	public static final int MOVE_RIGHT_KEY = Keys.D;
 	
+	/* Bolt tower */
+	public static final float BoltTowerHealth = 15f;
+	public static final float BoltTowerRange = 100;
+	public static final float BoltTowerDamage = 2;
+	public static final float BoltTowerAttackInterval = 1500;
+	
 }

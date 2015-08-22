@@ -1,4 +1,4 @@
-package com.ld33.game;
+package com.ld33.game.environment;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
