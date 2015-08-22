@@ -9,14 +9,19 @@ public final class Config {
 	public static final char BoltTower = 'x';
 	public static final char PlayerStartPosition = '@';
 
-	public static final float PLAYER_TPS = 2f; // Player's tiles per second movement
-	public static final float PLAYER_ANIM_JUMP_DURATION = 0.2f;
-	public static final float PLAYER_ANIM_JUMP_HEIGHT = 0.2f; // Relative to player's height
+	public static final float PlayerTps = 2f; // Player's tiles per second movement
+	public static final float PlayerAnimationJumpDuration = 0.2f;
+	public static final float PlayerAnimationJumpHeight = 0.2f; // Relative to player's height
+	public static final float PlayerRadiusPerMinion = 0.1f; // Relative to vertical percent of the screen
 	
-	public static final int MOVE_UP_KEY = Keys.W;
-	public static final int MOVE_LEFT_KEY = Keys.A;
-	public static final int MOVE_DOWN_KEY = Keys.S;
-	public static final int MOVE_RIGHT_KEY = Keys.D;
+	public static final float MinionReactionDelayMin = 0.2f;
+	public static final float MinionReactionDelayMax = 0.5f;
+	public static final float MinionPositionRadiusMin = 0.2f;
+	
+	public static final int MoveUpKey = Keys.W;
+	public static final int MoveLeftKey = Keys.A;
+	public static final int MoveDownKey = Keys.S;
+	public static final int MoveRightKey = Keys.D;
 	
 	/* Bolt tower */
 	public static final float BoltTowerHealth = 15f;

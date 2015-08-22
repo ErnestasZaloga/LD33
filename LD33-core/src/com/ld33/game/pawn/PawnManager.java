@@ -75,31 +75,33 @@ public final class PawnManager implements ManagerInterface {
 	}
 
 	public void update(final float delta) {
+		System.out.println("////////////////////////");
+		System.out.println("Frame  y:" + " " + player.getY());
 		// Handle controls
 		{
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_UP_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveUpKey)) {
 				player.startMoveUp();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_DOWN_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveDownKey)) {
 				player.startMoveDown();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_LEFT_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveLeftKey)) {
 				player.startMoveLeft();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_RIGHT_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveRightKey)) {
 				player.startMoveRight();
 			}
 			
-			if(!Gdx.input.isKeyPressed(Config.MOVE_UP_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveUpKey)) {
 				player.stopMoveUp();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_DOWN_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveDownKey)) {
 				player.stopMoveDown();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_LEFT_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveLeftKey)) {
 				player.stopMoveLeft();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_RIGHT_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveRightKey)) {
 				player.stopMoveRight();
 			}
 		}
@@ -123,20 +125,18 @@ public final class PawnManager implements ManagerInterface {
 			final float validY = player.getPlaneY();
 			
 			//X axis
-			//System.out.println("Before x: " + player.getX() + " " + player.getY());
-			player.moveBy(delta * Config.PLAYER_TPS * tileWidth * player.getHorizontalMovementState(), 0f);
+			player.moveBy(delta * Config.PlayerTps * tileWidth * player.getHorizontalMovementState(), 0f);
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
 				player.setX(validX);
 			}
 			System.out.println("Before y:" + " " + player.getY() +" "+ validY);
 			//Y axis
-			player.moveBy(0f, delta * Config.PLAYER_TPS * tileHeight * player.getVerticalMovementState());
+			player.moveBy(0f, delta * Config.PlayerTps * tileHeight * player.getVerticalMovementState());
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
-				System.out.println("collision happened!");
+				System.out.println("collision happened at "+player.getY());
 				player.setY(validY + player.getJumpDisplacement());
 			}
 			System.out.println("After  y:" + " " + player.getY() +" "+ validY);
-			//System.out.println("After xy: " + player.getX() + " " + player.getY());
 		}
 		
 		// Limit player movement to within map bounds

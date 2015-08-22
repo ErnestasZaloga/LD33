@@ -32,12 +32,16 @@ public final class Player extends Pawn {
 		setRegion(app.getAssets().mainCharacterRegion);
 	}
 	
+	public float getMinionRadius() {
+		return app.wpercent() * Config.PlayerRadiusPerMinion * minions.size;
+	}
+	
 	public float getPlaneY() {
-		return getY() - (getHeight() * Config.PLAYER_ANIM_JUMP_HEIGHT) * modY;
+		return getY();// - (getHeight() * Config.PlayerAnimationJumpHeight) * modY;
 	}
 	
 	public float getJumpDisplacement() {
-		return getHeight() * Config.PLAYER_ANIM_JUMP_HEIGHT * modY;
+		return 0f;//getHeight() * Config.PlayerAnimationJumpHeight * modY;
 	}
 	
 	public void startMoveLeft() {
@@ -91,13 +95,13 @@ public final class Player extends Pawn {
 		final boolean isMoving = isMoving();
 		
 		if(wasMoving && !isMoving) {
-			clearActions();
-			addAction(Steps.action(Steps._float(modY, 0, modY * (Config.PLAYER_ANIM_JUMP_DURATION / 2f), modYListener)));
+			//clearActions();
+			//addAction(Steps.action(Steps._float(modY, 0, modY * (Config.PlayerAnimationJumpDuration / 2f), modYListener)));
 		}
 		else if(!wasMoving && isMoving) {
-			addAction(Steps.action(Steps.repeat(Steps.sequence(
-						Steps._float(0f, 1f, (Config.PLAYER_ANIM_JUMP_DURATION / 2f), modYListener),
-						Steps._float(1f, 0f, (Config.PLAYER_ANIM_JUMP_DURATION / 2f), modYListener)))));
+			//addAction(Steps.action(Steps.repeat(Steps.sequence(
+			//			Steps._float(0f, 1f, (Config.PlayerAnimationJumpDuration / 2f), modYListener),
+			//			Steps._float(1f, 0f, (Config.PlayerAnimationJumpDuration / 2f), modYListener)))));
 		}
 		
 	}
@@ -128,14 +132,14 @@ public final class Player extends Pawn {
 	
 	@Override
 	public void act(final float delta) {
-		final float jumpHeight = getHeight() * Config.PLAYER_ANIM_JUMP_HEIGHT;
+		final float jumpHeight = getHeight() * Config.PlayerAnimationJumpHeight;
 		
 		// Important! process before calling act
 		final float realY = getY() - jumpHeight * modY;
 		
 		super.act(delta);
 		
-		setY(realY + jumpHeight * modY);
+		//setY(realY + jumpHeight * modY);
 	}
 	
 }
