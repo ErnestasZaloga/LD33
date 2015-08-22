@@ -77,29 +77,29 @@ public final class PawnManager implements ManagerInterface {
 	public void update(final float delta) {
 		// Handle controls
 		{
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_UP_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveUpKey)) {
 				player.startMoveUp();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_DOWN_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveDownKey)) {
 				player.startMoveDown();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_LEFT_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveLeftKey)) {
 				player.startMoveLeft();
 			}
-			if(Gdx.input.isKeyJustPressed(Config.MOVE_RIGHT_KEY)) {
+			if(Gdx.input.isKeyJustPressed(Config.MoveRightKey)) {
 				player.startMoveRight();
 			}
 			
-			if(!Gdx.input.isKeyPressed(Config.MOVE_UP_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveUpKey)) {
 				player.stopMoveUp();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_DOWN_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveDownKey)) {
 				player.stopMoveDown();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_LEFT_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveLeftKey)) {
 				player.stopMoveLeft();
 			}
-			if(!Gdx.input.isKeyPressed(Config.MOVE_RIGHT_KEY)) {
+			if(!Gdx.input.isKeyPressed(Config.MoveRightKey)) {
 				player.stopMoveRight();
 			}
 		}
@@ -122,13 +122,13 @@ public final class PawnManager implements ManagerInterface {
 			final float validX = player.getX();
 			final float validY = player.getPlaneY();
 			
-			player.moveBy(delta * Config.PLAYER_TPS * tileWidth * player.getHorizontalMovementState(), 0f);
+			player.moveBy(delta * Config.PlayerTps * tileWidth * player.getHorizontalMovementState(), 0f);
 			
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
 				player.setX(validX);
 			}
 			
-			player.moveBy(0f, delta * Config.PLAYER_TPS * tileHeight * player.getVerticalMovementState());
+			player.moveBy(0f, delta * Config.PlayerTps * tileHeight * player.getVerticalMovementState());
 
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
 				player.setY(validY + player.getJumpDisplacement());
