@@ -58,7 +58,6 @@ public final class App implements ApplicationListener {
 		
 		assets = new Assets(resolution);
 		audio = new AudioManager(this);
-		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assets.audioStream.setEnabled(userData.isSoundsEnabled());
 	}
 
