@@ -1,0 +1,41 @@
+
+Game.png
+size: 583,748
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Grass
+  rotate: false
+  xy: 454, 460
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Sand
+  rotate: false
+  xy: 454, 330
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Tower
+  rotate: false
+  xy: 454, 200
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Wall
+  rotate: false
+  xy: 454, 590
+  size: 128, 157
+  orig: 128, 157
+  offset: 0, 0
+  index: -1
+largefont
+  rotate: false
+  xy: 1, 1
+  size: 451, 746
+  orig: 451, 746
+  offset: 0, 0
+  index: -1

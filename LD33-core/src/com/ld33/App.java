@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.ld33.devkit.Resolution;
 import com.ld33.screens.Screens;
 import com.ld33.utils.DeltaTime;
+import com.workforfood.devkit.Resolution;
 
 public final class App implements ApplicationListener {
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.ld33.devkit.TextureRegionExt;
+import com.workforfood.devkit.TextureRegionExt;
 
 public class SpriteActor extends Actor {
 
