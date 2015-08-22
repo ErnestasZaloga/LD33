@@ -2,6 +2,7 @@ package com.ld33.game;
 
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
+import com.ld33.Config;
 import com.workforfood.devkit.TextureRegionExt;
 
 public class MapFactory {
@@ -9,7 +10,7 @@ public class MapFactory {
 	private MapFactory() {
 	}
 	
-	public static Array<Tile> generateMap(final App app, String mapString) {
+	public static Array<Tile> generateMap(final App app, String mapString, Array<TileObject> tileObjects) {
 		Array<Tile> tiles = new Array<Tile>();
 		
 		int x = 0;
@@ -29,14 +30,20 @@ public class MapFactory {
 			
 			TextureRegionExt region = null;
 			
-			if(mapString.charAt(i) == '#') {
+			if(mapString.charAt(i) == Config.WallTile) {
 				region = app.getAssets().wallRegion;
+				t = new Tile(mapString.charAt(i), region);
 			}
-			else if(mapString.charAt(i) == '.') {
+			else if(mapString.charAt(i) == Config.GrassTile) {
 				region = app.getAssets().grassTileRegion;
+				t = new Tile(mapString.charAt(i), region);
+			}
+			else if(mapString.charAt(i) == Config.BoltTower) {
+				region = app.getAssets().towerRegion;
+				t = new TileObject(mapString.charAt(i), region);
+				tileObjects.add((TileObject)t);
 			}
 			
-			t = new Tile(mapString.charAt(i), region);
 			t.setPosition(x*w, y*h);
 			t.setxIndex(x);
 			t.setyIndex(y);
