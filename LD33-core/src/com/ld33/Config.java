@@ -20,9 +20,9 @@ public final class Config {
 	
 	/* Bolt tower */
 	public static final float BoltTowerHealth = 15f;
-	public static final float BoltTowerRange = 100;
+	public static final float BoltTowerRange = 300;
 	public static final float BoltTowerDamage = 2;
-	public static final float BoltTowerProjectileSpeed = 50f;
+	public static final float BoltTowerProjectileSpeed = 80f;
 	public static final float BoltTowerAttackInterval = 1.5f;
 	
 }

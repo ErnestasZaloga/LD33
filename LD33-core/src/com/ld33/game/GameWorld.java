@@ -68,8 +68,11 @@ public class GameWorld extends Group {
 	public void act(final float delta) {
 		super.act(delta);
 		
-		pawnManager.update(delta);
-		environmentManager.update(delta);
+//		pawnManager.update(delta);
+//		environmentManager.update(delta);
+		for(ManagerInterface manager : managers) {
+			manager.update(delta);
+		}
 		
 		final Player player = pawnManager.getPlayer();
 		
@@ -128,6 +131,10 @@ public class GameWorld extends Group {
 		
 		super.setSize(width, height);
 		contentGroup.getCullingArea().setSize(width, height);
+	}
+	
+	public PawnManager getPawnManager() {
+		return pawnManager;
 	}
 	
 	public ProjectileManager getProjectileManager() {

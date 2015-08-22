@@ -1,7 +1,6 @@
 package com.ld33.game.environment;
 
 import com.ld33.Config;
-import com.ld33.game.GameWorld;
 import com.workforfood.devkit.TextureRegionExt;
 
 public class TileObject extends Tile {

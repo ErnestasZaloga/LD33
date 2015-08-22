@@ -8,7 +8,7 @@ public class Projectile extends SpriteActor {
 	private float damage;
 	private float range;
 	private float speed;
-	private boolean dead = false;
+	private float distanceTraveled = 0;
 	
 	public Projectile(TextureRegionExt region) {
 		this.setRegion(region);
@@ -38,12 +38,12 @@ public class Projectile extends SpriteActor {
 		this.speed = speed;
 	}
 
-	public boolean isDead() {
-		return dead;
+	public float getDistanceTraveled() {
+		return distanceTraveled;
 	}
 
-	public void setDead(boolean dead) {
-		this.dead = dead;
+	public void increaseDistanceTraveled(float delta) {
+		this.distanceTraveled += delta;
 	}
 	
 }
