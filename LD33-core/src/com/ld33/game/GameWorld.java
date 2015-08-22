@@ -12,7 +12,7 @@ public class GameWorld extends Group {
 	
 	public GameWorld(App app) {
 		this.app = app;
-		tiles = MapFactory.generateMap(Gdx.files.internal("maps/map1.txt").readString());
+		tiles = MapFactory.generateMap(app, Gdx.files.internal("maps/map1.txt").readString());
 		for(Tile t : tiles) {
 			app.getStage().addActor(t);
 		}

@@ -13,7 +13,7 @@ public class MapFactory {
 	public static Array<Tile> generateMap(final App app, String mapString) {
 		Array<Tile> tiles = new Array<Tile>();
 		int x = 0;
-		int y = 1;
+		int y = 5;
 		Tile t = null;
 		
 		for(int i=0; i<mapString.length(); i++) {
@@ -25,19 +25,20 @@ public class MapFactory {
 			
 			if(ch == '\n') {
 				x = 0;
-				y -= 1;
+				y--;
 				continue;
 			}
 			
-			final TextureRegionExt region;
+			TextureRegionExt region = null;
 			
 			if(mapString.charAt(i) == '#') {
+				region = app.getAssets().blockRegion;
 			}
 			else if(mapString.charAt(i) == '.') {
-			
+				region = app.getAssets().GrassRegion;
 			}
 			
-			t = new Tile(region);
+			t = new Tile(mapString.charAt(i), region);
 			t.setPosition(x*Config.tileWH, y*Config.tileWH);
 			x++;
 			
