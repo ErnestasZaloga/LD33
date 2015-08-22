@@ -1,7 +1,9 @@
 package com.workforfood.devkit;
 
+import com.esotericsoftware.spine.Animation;
 
 public abstract class RAssets extends BaseAssets {
+
 
 	// *************************
 	// TEXTURES
@@ -13,11 +15,13 @@ public abstract class RAssets extends BaseAssets {
 
 	protected final AtlasResource GameAtlas;
 
-	public final TextureRegionExt GrassRegion;
-	public final TextureRegionExt SandRegion;
-	public final TextureRegionExt TowerRegion;
-	public final TextureRegionExt WallRegion;
+	public final TextureRegionExt grassTileRegion;
 	public final TextureRegionExt largefontRegion;
+	public final TextureRegionExt mainCharacterRegion;
+	public final TextureRegionExt minionRegion;
+	public final TextureRegionExt sandTileRegion;
+	public final TextureRegionExt towerRegion;
+	public final TextureRegionExt wallRegion;
 
 
 	// *************************
@@ -64,11 +68,13 @@ public abstract class RAssets extends BaseAssets {
 
 		GameAtlas = loadAtlas("Game");
 
-		GrassRegion = GameAtlas.find("Grass");
-		SandRegion = GameAtlas.find("Sand");
-		TowerRegion = GameAtlas.find("Tower");
-		WallRegion = GameAtlas.find("Wall");
+		grassTileRegion = GameAtlas.find("grassTile");
 		largefontRegion = GameAtlas.find("largefont");
+		mainCharacterRegion = GameAtlas.find("mainCharacter");
+		minionRegion = GameAtlas.find("minion");
+		sandTileRegion = GameAtlas.find("sandTile");
+		towerRegion = GameAtlas.find("tower");
+		wallRegion = GameAtlas.find("wall");
 
 
 		// *************************

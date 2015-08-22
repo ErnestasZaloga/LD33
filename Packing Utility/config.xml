@@ -1,0 +1,53 @@
+<config version="1">
+	<general inputFileName="config.xml"
+			 inputFolderName="Images"
+			 outputFolderName="Packed"
+			 scaledFolderName="Scaled"
+			 openOutputFolder="true"
+			 leaveScaledOutput="true"
+			 cleanStart="true"
+			 injectionFolderName="Inject"
+			 useCache="false"
+			 >
+		
+
+		<size-def name="ldpi" 
+				  width="320" 
+				  height="480" 
+				  maxTextureWidth="1024"
+				  maxTextureHeight="1024" />
+
+		<size-def name="mdpi" 
+		  		  width="480" 
+		  		  height="800" 
+		  		  maxTextureWidth="2048"
+		  		  maxTextureHeight="2048" />
+
+		<size-def name="hdpi" 
+				  width="800" 
+				  height="1280" 
+				  maxTextureWidth="2048"
+				  maxTextureHeight="2048" />
+				  
+		<size-def name="xhdpi" 
+		  		  width="1600" 
+		  		  height="2560" 
+		  		  maxTextureWidth="4096"
+		  		  maxTextureHeight="4096" />
+	</general>
+	
+	<pack fileExtension=""
+		   pot="false">
+		<export>
+			<size>xhdpi</size>
+			<size>hdpi</size>
+			<size>mdpi</size>
+			<size>ldpi</size>
+		</export>
+	</pack>
+	<group stripWhitespaceX="false"
+	   	   stripWhitespaceY="false"
+	   	   alphaThreshold="0"
+	   	   inputSize="xhdpi"
+	   	   scalingUnsharpenMask="none" />
+</config>

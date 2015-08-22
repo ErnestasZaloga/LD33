@@ -1,0 +1,7 @@
+<config version="1">
+	<pack outputFormat="png"
+		  jpegQuality="1"
+		  filterMin="nearest"
+		  filterMag="nearest"
+		/>
+</config>
