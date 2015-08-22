@@ -1,9 +1,7 @@
 package com.workforfood.devkit;
 
-import com.esotericsoftware.spine.Animation;
 
 public abstract class RAssets extends BaseAssets {
-
 
 	// *************************
 	// TEXTURES
