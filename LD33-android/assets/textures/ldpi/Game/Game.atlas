@@ -4,6 +4,20 @@ size: 154,199
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+box
+  rotate: false
+  xy: 127, 167
+  size: 26, 31
+  orig: 26, 31
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 127, 167
+  size: 26, 31
+  orig: 26, 31
+  offset: 0, 0
+  index: -1
 grassTile
   rotate: false
   xy: 127, 139
@@ -20,14 +34,14 @@ largefont
   index: -1
 mainCharacter
   rotate: false
-  xy: 127, 58
+  xy: 127, 30
   size: 19, 23
   orig: 19, 23
   offset: 0, 0
   index: -1
 minion
   rotate: false
-  xy: 127, 45
+  xy: 127, 17
   size: 9, 11
   orig: 9, 11
   offset: 0, 0
@@ -39,17 +53,17 @@ sandTile
   orig: 26, 26
   offset: 0, 0
   index: -1
-tower
+tile
   rotate: false
   xy: 127, 83
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
-wall
+tower
   rotate: false
-  xy: 127, 167
-  size: 26, 31
-  orig: 26, 31
+  xy: 127, 55
+  size: 26, 26
+  orig: 26, 26
   offset: 0, 0
   index: -1

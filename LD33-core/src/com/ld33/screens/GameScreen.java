@@ -12,7 +12,12 @@ public final class GameScreen extends BaseScreen {
 	}
 	
 	protected void onShow() {
+		if(gameWorld != null) {
+			gameWorld.remove();
+		}
+		
 		gameWorld = new GameWorld(app);
+		addActor(gameWorld);
 	}
 	
 	@Override
