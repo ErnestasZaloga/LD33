@@ -27,4 +27,8 @@ public final class GameScreen extends BaseScreen {
 		super.setSize(width, height);
 	}
 	
+	public GameWorld getGameWorld() {
+		return gameWorld;
+	}
+	
 }

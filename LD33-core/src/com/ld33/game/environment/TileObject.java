@@ -1,18 +1,22 @@
 package com.ld33.game.environment;
 
 import com.ld33.Config;
+import com.ld33.game.GameWorld;
 import com.workforfood.devkit.TextureRegionExt;
 
 public class TileObject extends Tile {
 
+	private final GameWorld gameWorld;
+	
 	private float health;
 	private float range;
 	private float damage;
 	private float attackInterval;
 	private float timeUntilAttack = 0;
 	
-	public TileObject(char type, TextureRegionExt textureRegionExt) {
+	public TileObject(char type, TextureRegionExt textureRegionExt, GameWorld gameWorld) {
 		super(type, textureRegionExt);
+		this.gameWorld = gameWorld;
 		setStats();
 	}
 	
@@ -22,10 +26,11 @@ public class TileObject extends Tile {
 		if(timeUntilAttack < 0) timeUntilAttack = 0;
 	}
 	
-	public void attack(float x, float y) {
+	public void attack(float x, float y, float targetX, float targetY) {
 		if(timeUntilAttack <= 0) {
 			timeUntilAttack = attackInterval;
-			System.out.println("attack!");
+			System.out.println(gameWorld);
+			gameWorld.getProjectileManager().createBolt(x, y, targetX, targetY);
 		}
 	}
 	

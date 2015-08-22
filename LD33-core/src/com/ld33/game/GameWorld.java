@@ -13,6 +13,7 @@ public class GameWorld extends Group {
 	private MapData mapData;
 	private PawnManager pawnManager;
 	private EnvironmentManager environmentManager;
+	private ProjectileManager projectileManager;
 	
 	public GameWorld(App app) {
 		this.app = app;
@@ -31,6 +32,7 @@ public class GameWorld extends Group {
 		pawnManager.populateWorld(this);
 		
 		environmentManager = new EnvironmentManager(pawnManager, mapData);
+		projectileManager = new ProjectileManager(app);
 	}
 	
 	@Override
@@ -38,6 +40,10 @@ public class GameWorld extends Group {
 		super.act(delta);
 		pawnManager.update(delta);
 		environmentManager.update(delta);
+	}
+	
+	public ProjectileManager getProjectileManager() {
+		return projectileManager;
 	}
 	
 }

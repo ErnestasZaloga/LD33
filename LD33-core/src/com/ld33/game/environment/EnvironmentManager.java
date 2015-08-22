@@ -16,8 +16,7 @@ public class EnvironmentManager {
 		//Update each tower
 		for(TileObject t : mapData.getTileObjects()) {
 			if(distanceBetween(t.getX(), t.getY(), pawnManager.getPlayer().getX(), pawnManager.getPlayer().getY()) <= t.getRange()) {
-				//Shoot at it TODOO
-				t.attack(pawnManager.getPlayer().getX(), pawnManager.getPlayer().getY());
+				t.attack(t.getX(), t.getY(), pawnManager.getPlayer().getX(), pawnManager.getPlayer().getY());
 			}
 		}
 	}

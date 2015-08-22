@@ -40,7 +40,7 @@ public class MapFactory {
 			}
 			else if(mapString.charAt(i) == Config.BoltTower) {
 				region = app.getAssets().towerRegion;
-				t = new TileObject(mapString.charAt(i), region);
+				t = new TileObject(mapString.charAt(i), region, app.getScreens().getGameScreen().getGameWorld());
 				tileObjects.add((TileObject)t);
 			}
 			
