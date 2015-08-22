@@ -9,8 +9,8 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "LD33";
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = 1024;
+		cfg.height = 768;
 		
 		new LwjglApplication(new App(), cfg);
 	}
