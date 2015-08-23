@@ -66,6 +66,14 @@ public final class PawnManager implements ManagerInterface {
 		return player;
 	}
 	
+	public int getEnemyMinionCount() {
+		return enemyMinions.size;
+	}
+	
+	public EnemyMinion getEnemyMinion(final int index) {
+		return enemyMinions.get(index);
+	}
+	
 	private boolean checkCollision(final Pawn pawn,
 								   final float tileWidth,
 								   final float tileHeight) {
