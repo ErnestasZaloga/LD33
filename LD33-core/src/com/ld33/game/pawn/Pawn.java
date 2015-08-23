@@ -25,7 +25,7 @@ public abstract class Pawn extends SpriteActor {
 	private final float maxHealth;
 	private float health;
 	private CombatType combatType;
-	private float visionRange;
+	protected float visionRange;
 	private float attackRange;
 	private float attackInterval;
 	private float timeUntilAttack = 0;
@@ -38,7 +38,7 @@ public abstract class Pawn extends SpriteActor {
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
 		this.combatType = CombatType.RANGED;
-		this.visionRange = 250f;
+		this.visionRange = Config.MinionVisionRange;
 		if(combatType == CombatType.MELEE) {
 			this.attackRange = Config.MeleeAttackRange;
 			this.attackInterval = Config.MeleeAttackInterval;

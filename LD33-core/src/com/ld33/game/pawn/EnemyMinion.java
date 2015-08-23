@@ -8,7 +8,7 @@ public class EnemyMinion extends Pawn {
 	private App app;
 	private Player player;
 	private float direction = 0;
-	private float range = Config.EnemyMinionVisionRange;
+//	private float visionRange = Config.MinionVisionRange;
 	private boolean active = false;
 	
 	public EnemyMinion(App app, Player player) {
@@ -35,7 +35,7 @@ public class EnemyMinion extends Pawn {
 		float dx = player.getX()-this.getX();
 		float dy = player.getPlaneY()-this.getPlaneY();
 		float distance = (float)Math.sqrt(dx*dx+dy*dy);
-		if(distance <= range) {
+		if(distance <= visionRange) {
 			return true;
 		}
 		return false;

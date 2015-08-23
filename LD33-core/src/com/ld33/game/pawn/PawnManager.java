@@ -211,23 +211,6 @@ public final class PawnManager implements ManagerInterface {
 				final float amountX = delta * tileWidth * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.x;
 				final float amountY = delta * tileHeight * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.y;
 				
-				if(requiredAmountX != 0f) {
-					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
-					minion.moveBy(scaleX * requiredAmountX, 0f);
-					
-					if(checkCollision(minion, tileWidth, tileHeight)) {
-						minion.setX(validX);
-					}	
-				}
-				
-				if(requiredAmountY != 0f) {
-					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
-					minion.moveBy(0f, scaleY * requiredAmountY);
-
-					if(checkCollision(minion, tileWidth, tileHeight)) {
-						minion.setY(validY + minion.getJumpDisplacement());
-					}
-				}
 				//Make minions attack, if there are enemies nearby
 				//Look for nearby towers
 				float nearestTargetX = 0;
@@ -238,8 +221,8 @@ public final class PawnManager implements ManagerInterface {
 					float dy = tower.getY()-minion.getPlaneY();
 					float distance = (float)Math.sqrt(dx*dx+dy*dy);
 					if(distance < shortestDistance) {
-						nearestTargetX = tower.getX();
-						nearestTargetY = tower.getY();
+						nearestTargetX = tower.getX()+tower.getWidth()/2;
+						nearestTargetY = tower.getY()+tower.getWidth()/2;
 						shortestDistance = distance;
 					}
 				}
@@ -249,15 +232,34 @@ public final class PawnManager implements ManagerInterface {
 					float dy = enemyMinion.getPlaneY()-minion.getPlaneY();
 					float distance = (float)Math.sqrt(dx*dx+dy*dy);
 					if(distance < shortestDistance) {
-						nearestTargetX = enemyMinion.getX();
-						nearestTargetY = enemyMinion.getPlaneY();
+						nearestTargetX = enemyMinion.getX()+enemyMinion.getWidth()/2;
+						nearestTargetY = enemyMinion.getPlaneY()+enemyMinion.getWidth()/2;
 						shortestDistance = distance;
 					}
 				}
 				//Shoot at nearest target if it is in range
 				if(minion.canAttack()) {
-					minion.resetAttackCooldown();
-					projectileManager.createFriendlyAttack(minion, nearestTargetX, nearestTargetY);
+					if(shortestDistance <= minion.getAttackRange()) {
+						minion.resetAttackCooldown();
+						projectileManager.createFriendlyAttack(minion, nearestTargetX, nearestTargetY);
+					}
+				}
+				//Move and check for collisions
+				if(requiredAmountX != 0f) {
+					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
+					minion.moveBy(scaleX * requiredAmountX, 0f);
+					
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setX(validX);
+					}	
+				}
+				if(requiredAmountY != 0f) {
+					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
+					minion.moveBy(0f, scaleY * requiredAmountY);
+
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setY(validY + minion.getJumpDisplacement());
+					}
 				}
 			}
 			//Enemy minions
@@ -265,13 +267,10 @@ public final class PawnManager implements ManagerInterface {
 				if(!enemyMinion.isActive()) continue;
 //				enemyMinion.moveBy(Config.EnemyMinionTilesPerSecond*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
 //						Config.EnemyMinionTilesPerSecond*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
-				//Move
-				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
-						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
 				//Shoot
 				//Look for player nearby
-				float nearestTargetX = player.getX();
-				float nearestTargetY = player.getPlaneY();
+				float nearestTargetX = player.getX()+player.getWidth()/2;
+				float nearestTargetY = player.getPlaneY()+player.getWidth()/2;
 				float shortestDistance = (float)Math.sqrt((player.getX()-enemyMinion.getX())*(player.getX()-enemyMinion.getX())+(player.getPlaneY()-enemyMinion.getPlaneY())*(player.getPlaneY()-enemyMinion.getPlaneY()));
 				//Look for minions nearby
 				for(int ii=0; ii<player.getMinionCount(); ii++) {
@@ -280,15 +279,22 @@ public final class PawnManager implements ManagerInterface {
 					float dy = minion.getPlaneY()-enemyMinion.getPlaneY();
 					float distance = (float)Math.sqrt(dx*dx+dy*dy);
 					if(distance < shortestDistance) {
-						nearestTargetX = minion.getX();
-						nearestTargetY = minion.getPlaneY();
+						nearestTargetX = minion.getX()+minion.getWidth()/2;
+						nearestTargetY = minion.getPlaneY()+minion.getWidth()/2;
 						shortestDistance = distance;
 					}
 				}
 				//Shoot at nearest target
 				if(enemyMinion.canAttack()) {
-					enemyMinion.resetAttackCooldown();
-					projectileManager.createUnfriendlyAttack(enemyMinion, nearestTargetX, nearestTargetY);
+					if(shortestDistance <= enemyMinion.getAttackRange()) {
+						enemyMinion.resetAttackCooldown();
+						projectileManager.createUnfriendlyAttack(enemyMinion, nearestTargetX, nearestTargetY);
+					}
+				}
+				//Move
+				if(shortestDistance >= enemyMinion.getAttackRange()) {
+				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
+						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
 				}
 			}
 		}
