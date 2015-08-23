@@ -1,5 +1,6 @@
 package com.ld33.game.pawn;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
@@ -11,17 +12,49 @@ public final class Player extends Pawn {
 	private int horizontalMovementState;
 	private int verticalMovementState;
 	
+	private float minionRadiusScalerMin = Config.PlayerMidMinionRadiusScalerMin;
+	private float minionRadiusScalerMax = Config.PlayerMidMinionRadiusScalerMax;
 	private final Array<Minion> minions = new Array<Minion>();
 	
 	public Player(final App app) {
-		super(Config.PlayerMaxHealth, app.getAssets().depthHeightScaling);
+		super(Config.PlayerMaxHealth);
 		
 		this.app = app;
 		setRegion(app.getAssets().mainCharacterRegion);
 	}
 	
-	public float getMinionRadius() {
-		return app.wpercent() * Config.PlayerRadiusPerMinion * minions.size;
+	public float chooseMinionRadius() {
+		return app.wpercent() * Config.PlayerMinionRadius * MathUtils.random(minionRadiusScalerMin, minionRadiusScalerMax);
+	}
+	
+	public void activateSmallMinionRadius() {
+		setMinionRadiusScaler(Config.PlayerSmallMinionRadiusScalerMin, Config.PlayerSmallMinionRadiusScalerMax);
+	}
+	
+	public void activateMidMinionRadius() {
+		setMinionRadiusScaler(Config.PlayerMidMinionRadiusScalerMin, Config.PlayerMidMinionRadiusScalerMax);
+	}
+	
+	public void activateLargeMinionRadius() {
+		setMinionRadiusScaler(Config.PlayerLargeMinionRadiusScalerMin, Config.PlayerLargeMinionRadiusScalerMax);
+	}
+	
+	private void setMinionRadiusScaler(final float minionRadiusScalerMin,
+									   final float minionRadiusScalerMax) {
+		
+		if(this.minionRadiusScalerMin != minionRadiusScalerMin ||
+		   this.minionRadiusScalerMax != minionRadiusScalerMax) {
+			
+			this.minionRadiusScalerMin = minionRadiusScalerMin;
+			this.minionRadiusScalerMax = minionRadiusScalerMax;
+			bumpMinions();
+		}
+	}
+	
+	private void bumpMinions() {
+		for(int i = 0; i < minions.size; i += 1) {
+			minions.get(i).activateFromSleep();
+		}
 	}
 	
 	public void startMoveLeft() {
@@ -96,7 +129,6 @@ public final class Player extends Pawn {
 	
 	protected void registerMinion(final Minion minion) {
 		minions.add(minion);
-		minion.begin();
 	}
 	
 	public int getMinionCount() {

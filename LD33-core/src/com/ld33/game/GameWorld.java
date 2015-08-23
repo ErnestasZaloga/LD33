@@ -9,6 +9,8 @@ import com.ld33.game.environment.EnvironmentManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.MapFactory;
 import com.ld33.game.environment.Tile;
+import com.ld33.game.pawn.Minion;
+import com.ld33.game.pawn.Pawn;
 import com.ld33.game.pawn.PawnManager;
 import com.ld33.game.pawn.Player;
 
@@ -64,13 +66,18 @@ public class GameWorld extends Group {
 		managers.add(projectileManager);
 	}
 	
+	private void zSort(final Pawn pawn) {
+		final int rightTileX = (int)(pawn.getX() / app.getAssets().tileWidth);
+		final int tileY = (int)((pawn.getPlaneY()) / app.getAssets().tileHeight);
+
+		pawn.setZIndex(mapData.getTileAtXYIndex(rightTileX, tileY).getZIndex() + 1);
+	}
+	
 	@Override
 	public void act(final float delta) {
 		super.act(delta);
 		
-//		pawnManager.update(delta);
-//		environmentManager.update(delta);
-		for(ManagerInterface manager : managers) {
+		for(final ManagerInterface manager : managers) {
 			manager.update(delta);
 		}
 		
@@ -116,10 +123,12 @@ public class GameWorld extends Group {
 		
 		// Z sorting
 		{
-			final int rightTileX = (int)(player.getX() / app.getAssets().tileWidth);
-			final int tileY = (int)((player.getPlaneY()) / app.getAssets().tileHeight);
-
-			player.setZIndex(mapData.getTileAtXYIndex(rightTileX, tileY).getZIndex() + 1);
+			zSort(player);
+			
+			for(int i = 0; i < player.getMinionCount(); i += 1) {
+				final Minion minion = player.getMinion(i);
+				zSort(minion);
+			}
 		}
 		
 		// Update culling position

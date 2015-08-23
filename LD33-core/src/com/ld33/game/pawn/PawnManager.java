@@ -38,6 +38,10 @@ public final class PawnManager implements ManagerInterface {
 			final Minion minion = new Minion(app, player);
 			player.registerMinion(minion);
 		}
+		
+		for(int i = 0; i < player.getMinionCount(); i += 1) {
+			player.getMinion(i).begin();
+		}
 	}
 	
 	public void setBounds(final float boundsWidth,
@@ -114,6 +118,16 @@ public final class PawnManager implements ManagerInterface {
 			if(!Gdx.input.isKeyPressed(Config.MoveRightKey)) {
 				player.stopMoveRight();
 			}
+			
+			if(Gdx.input.isKeyJustPressed(Config.FormationLargeKey)) {
+				player.activateLargeMinionRadius();
+			}
+			if(Gdx.input.isKeyJustPressed(Config.FormationMidKey)) {
+				player.activateMidMinionRadius();
+			}
+			if(Gdx.input.isKeyJustPressed(Config.FormationSmallKey)) {
+				player.activateSmallMinionRadius();
+			}
 		}
 
 		final float tileWidth = app.getAssets().tileWidth;
@@ -124,14 +138,14 @@ public final class PawnManager implements ManagerInterface {
 			final float validX = player.getX();
 			final float validY = player.getPlaneY();
 			
-			//X axis
+			// X axis
 			player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setX(validX);
 			}
 			
-			//Y axis
+			// Y axis
 			player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
@@ -148,21 +162,35 @@ public final class PawnManager implements ManagerInterface {
 					continue;
 				}
 				
-				final float requiredAmountX = minion.calcTargetX() - minion.getX();
-				final float requiredAmountY = minion.calcTargetY() - minion.getPlaneY();
+				final float validX = minion.getX();
+				final float validY = minion.getPlaneY();
+				
+				final float requiredAmountX = minion.calcTargetX() - validX;
+				final float requiredAmountY = minion.calcTargetY() - validY;
 				
 				tmpVector.set(requiredAmountX, requiredAmountY);
 				tmpVector.nor();
 				
-				final float amountX = delta * tileWidth * Config.MinionTilesPerSecond * tmpVector.x;
-				final float amountY = delta * tileHeight * Config.MinionTilesPerSecond * tmpVector.y;
+				final float amountX = delta * tileWidth * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.x;
+				final float amountY = delta * tileHeight * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.y;
 				
-				final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
-				final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
+				if(requiredAmountX != 0f) {
+					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
+					minion.moveBy(scaleX * requiredAmountX, 0f);
+					
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setX(validX);
+					}	
+				}
 				
-				minion.moveBy(
-					requiredAmountX * scaleX,
-					requiredAmountY * scaleY);
+				if(requiredAmountY != 0f) {
+					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
+					minion.moveBy(0f, scaleY * requiredAmountY);
+
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setY(validY + minion.getJumpDisplacement());
+					}
+				}
 			}
 		}
 		

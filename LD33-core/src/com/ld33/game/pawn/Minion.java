@@ -22,11 +22,15 @@ public final class Minion extends Pawn {
 	private float targetY;
 	private float delayTimer;
 	private float delay;
+	private float movementSpeedScaler;
+	
+	private float cachedPlayerX;
+	private float cachedPlayerY;
 	
 	public Minion(final App app,
 				  final Player player) {
 		
-		super(Config.MinionMaxHealth, app.getAssets().depthHeightScaling);
+		super(Config.MinionMaxHealth);
 		
 		this.app = app;
 		this.player = player;
@@ -34,12 +38,29 @@ public final class Minion extends Pawn {
 		setRegion(app.getAssets().minionRegion);
 	}
 	
+	protected void cachePlayerPosition() {
+		cachedPlayerX = player.getX();
+		cachedPlayerY = player.getPlaneY();
+	}
+	
+	protected float getCachedPlayerX() {
+		return cachedPlayerX;
+	}
+	
+	protected float getCachedPlayerY() {
+		return cachedPlayerY;
+	}
+	
+	public float getMovementSpeedScaler() {
+		return movementSpeedScaler;
+	}
+	
 	public float calcTargetX() {
-		return (player.getX() + player.getWidth() / 2f) + targetX;
+		return (cachedPlayerX + player.getWidth() / 2f) + targetX;
 	}
 	
 	public float calcTargetY() {
-		return (player.getPlaneY() + player.getHeight() / 2f) + targetY;
+		return (cachedPlayerY + player.getHeight() / 2f) + targetY;
 	}
 	
 	public void begin() {
@@ -65,15 +86,18 @@ public final class Minion extends Pawn {
 			delayTimer += delta;
 			
 			if(delayTimer >= delay) {
-				delayTimer = 0f;
-				delaySetup();
-
-				chooseTarget();
-				startMovement();
+				activateFromSleep();
 			}
 		}
 		else if(state == State.moving) {
-			if(targetX == getX() && targetY == getY()) {
+			delayTimer += delta;
+			
+			if(delayTimer >= delay) {
+				cachePlayerPosition();
+				resetDelay();
+			}
+			
+			if(calcTargetX() == getX() && calcTargetY() == getY()) {
 				stopMovement();
 			}
 		}
@@ -82,25 +106,37 @@ public final class Minion extends Pawn {
 		}
 	}
 	
+	public void activateFromSleep() {
+		resetDelay();
+		chooseTarget();
+		startMovement();
+	}
+	
 	private void chooseTarget() {
-		final float radiusOffset = MathUtils.random(Config.MinionPositionRadiusMin, 1f);
+		cachePlayerPosition();
+		
 		final float radiusAngle = MathUtils.random(0f, 360f);
-		final float radius = player.getMinionRadius();
+		final float radius = player.chooseMinionRadius();
 
-		tmpVector.set(0f, radius * radiusOffset);
+		tmpVector.set(0f, radius);
 		tmpVector.rotate(radiusAngle);
 		
 		targetX = tmpVector.x;
 		targetY = tmpVector.y;
 	}
 	
+	private void resetDelay() {
+		delayTimer = 0f;
+		delaySetup();
+	}
+	
 	private void startMovement() {
+		movementSpeedScaler = MathUtils.random(Config.MinionMovementSpeedRandomizationMin, Config.MinionMovementSpeedRandomizationMax);
 		state = State.moving;
 		startMovementAnimation();
 	}
 	
 	private void stopMovement() {
-		System.out.println("Switch to idle");
 		state = State.idle;
 		endMovementAnimation();
 	}
