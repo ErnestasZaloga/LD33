@@ -43,8 +43,13 @@ public class MapFactory {
 				}
 				else if(ch == Config.BoltTower) {
 					final TileObject tower = new TileObject(ch, x, y);
-					
 					region = app.getAssets().towerRegion;
+					tile = tower;
+					tileObjects.add(tower);
+				}
+				else if(ch == Config.SpawnerTower) {
+					final TileObject tower = new TileObject(ch, x, y);
+					region = app.getAssets().towerRegion;  //TODO select proper texture
 					tile = tower;
 					tileObjects.add(tower);
 				}

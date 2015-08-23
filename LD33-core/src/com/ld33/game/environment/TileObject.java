@@ -9,6 +9,9 @@ public class TileObject extends Tile {
 	private float damage;
 	private float attackInterval;
 	private float timeUntilAttack = 0;
+	private float specialActionInterval;
+	private float timeUntilSpecialAction = 0;
+	private boolean hasSpecialAction = false;
 	
 	public TileObject(final char type,
 					  final int xIndex,
@@ -24,6 +27,9 @@ public class TileObject extends Tile {
 		
 		timeUntilAttack -= delta;
 		if(timeUntilAttack < 0) timeUntilAttack = 0;
+		
+		timeUntilSpecialAction -= delta;
+		if(timeUntilSpecialAction < 0) timeUntilSpecialAction = 0;
 	}
 	
 	private void setStats() {
@@ -32,6 +38,14 @@ public class TileObject extends Tile {
 			this.range = Config.BoltTowerRange;
 			this.damage = Config.BoltTowerDamage;
 			this.attackInterval = Config.BoltTowerAttackInterval;
+		}
+		else if(type == Config.SpawnerTower) {
+			this.health = Config.SpawnerTowerHealth;
+			this.range = Config.SpawnerTowerRange;
+			this.damage = Config.SpawnerTowerDamage;
+			this.attackInterval = Config.SpawnerTowerAttackInterval;
+			this.specialActionInterval = Config.SpawnerTowerSpecialActionInterval;
+			this.hasSpecialAction = true;
 		}
 	}
 
@@ -79,8 +93,16 @@ public class TileObject extends Tile {
 		return timeUntilAttack <= 0;
 	}
 	
+	public boolean canPerformSpecialAction() {
+		return (timeUntilSpecialAction <= 0 && hasSpecialAction);
+	}
+	
 	public void startCooldown() {
 		timeUntilAttack = attackInterval;
+	}
+	
+	public void startSpecialActionCooldown() {
+		timeUntilSpecialAction = specialActionInterval;
 	}
 
 }

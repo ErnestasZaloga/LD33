@@ -33,12 +33,17 @@ public class EnvironmentManager implements ManagerInterface {
 					tileObject.startCooldown();
 					gameWorld.getProjectileManager().createBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
 				}
+				if(tileObject.canPerformSpecialAction()) {
+					//gameWorld.getPawnManager().addEnemyMinion();
+				}
 			}
 		}
 	}
 	
 	private float distanceBetween(float x1, float y1, float x2, float y2) {
-		return (float) Math.sqrt((x1-x2)*(y1-y2));
+		float dx = x1-x2;
+		float dy = y1-y2;
+		return (float) Math.sqrt((dx*dx)+(dy*dy));
 	}
 	
 }
