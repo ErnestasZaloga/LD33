@@ -26,21 +26,26 @@ public class MapData {
 		this.startY = startY;
 	}
 	
-	public Array<Tile> getTiles() {
-		return tiles;
-	}
-	
 	public Array<TileObject> getTileObjects() {
 		return tileObjects;
 	}
 	
-	public Tile getTileAtXYIndex(int x, int y) {
+	public Tile getTileAtXYIndexUnchecked(final int x,
+										  final int y) {
+		
+		return tiles.get(y * mapWidth + x);
+	}
+	
+	public Tile getTileAtXYIndex(final int x,
+								 final int y) {
+		
 		if(x < 0 || x >= mapWidth) {
 			throw new RuntimeException("Invalid x: " + x + " for map width " + mapWidth);
 		}
 		if(y < 0 || y >= mapHeight) {
 			throw new RuntimeException("Invalid y: " + y + " for map height " + mapHeight);
 		}
+		
 		return tiles.get(y * mapWidth + x);
 	}
 

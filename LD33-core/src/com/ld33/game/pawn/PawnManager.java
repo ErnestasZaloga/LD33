@@ -51,6 +51,7 @@ public final class PawnManager implements ManagerInterface {
 	public void addEnemyMinion() {
 		final EnemyMinion minion = new EnemyMinion(app, player);
 		minion.setPosition(player.getX(), player.getY());
+		
 		enemyMinions.add(minion);
 		contentGroup.addActor(minion);
 	}
@@ -64,6 +65,14 @@ public final class PawnManager implements ManagerInterface {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public int getEnemyMinionCount() {
+		return enemyMinions.size;
+	}
+	
+	public EnemyMinion getEnemyMinion(final int index) {
+		return enemyMinions.get(index);
 	}
 	
 	private boolean checkCollision(final Pawn pawn,
