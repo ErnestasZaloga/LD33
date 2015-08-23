@@ -14,6 +14,8 @@ public final class Player extends Pawn {
 	private final Array<Minion> minions = new Array<Minion>();
 	
 	public Player(final App app) {
+		super(Config.PlayerMaxHealth, app.getAssets().depthHeightScaling);
+		
 		this.app = app;
 		setRegion(app.getAssets().mainCharacterRegion);
 	}

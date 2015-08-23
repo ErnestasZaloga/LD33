@@ -26,6 +26,8 @@ public final class Minion extends Pawn {
 	public Minion(final App app,
 				  final Player player) {
 		
+		super(Config.MinionMaxHealth, app.getAssets().depthHeightScaling);
+		
 		this.app = app;
 		this.player = player;
 		
@@ -98,6 +100,7 @@ public final class Minion extends Pawn {
 	}
 	
 	private void stopMovement() {
+		System.out.println("Switch to idle");
 		state = State.idle;
 		endMovementAnimation();
 	}

@@ -12,10 +12,12 @@ public final class Config {
 	public static final float PawnAnimationJumpDuration = 0.2f;
 	public static final float PawnAnimationJumpHeight = 0.2f; // Relative to pawn's height
 	
+	public static final float PlayerMaxHealth = 100;
 	public static final float PlayerTilesPerSecond = 2f;
 	public static final float PlayerRadiusPerMinion = 2f; // Relative to vertical percent of the screen
 	public static final int PlayerInitialMinions = 10;
 	
+	public static final float MinionMaxHealth = 10;
 	public static final float MinionReactionDelayMin = 0.2f;
 	public static final float MinionReactionDelayMax = 0.5f;
 	public static final float MinionPositionRadiusMin = 0.2f;

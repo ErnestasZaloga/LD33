@@ -25,7 +25,6 @@ public final class PawnManager implements ManagerInterface {
 		
 		this.app = app;
 		this.mapData = mapData;
-		
 		this.player = new Player(app);
 		
 		final float tileWidth = app.getAssets().tileWidth;
@@ -52,15 +51,19 @@ public final class PawnManager implements ManagerInterface {
 		return player;
 	}
 	
-	private boolean checkCollision(final int leftTile,
-								   final int bottomTile,
-								   final int rightTile,
-								   final int topTile) {
+	private boolean checkCollision(final Pawn pawn,
+								   final float tileWidth,
+								   final float tileHeight) {
 		
-		final float playerX = player.getX();
-		final float playerY = player.getPlaneY();
-		final float playerWidth = player.getWidth();
-		final float playerHeight = player.getHeight();
+		final float pawnX = pawn.getX();
+		final float pawnY = pawn.getPlaneY();
+		final float pawnWidth = pawn.getWidth();
+		final float pawnHeight = pawn.getCollisionHeight();
+		
+		final int leftTile = (int)(pawnX / tileWidth);
+		final int rightTile = (int)((pawnX + pawnWidth) / tileWidth);
+		final int bottomTile = (int)(pawnY / tileHeight);
+		final int topTile = (int)((pawnY + pawnHeight) / tileHeight);
 		
 		for(int ix = leftTile; ix <= rightTile; ix += 1) {
 			for(int iy = bottomTile; iy <= topTile; iy += 1) {
@@ -70,12 +73,13 @@ public final class PawnManager implements ManagerInterface {
 					continue;
 				}
 
-				final boolean horizontalCollision = playerX <= tile.getRight() && playerX + playerWidth >= tile.getX();
-				final boolean verticalCollision = playerY <= tile.getTop() && playerY + playerHeight >= tile.getY();
-				
-				if(horizontalCollision && verticalCollision) {
-					return true;
+				if(pawnX > tile.getRight() || pawnX + pawnWidth < tile.getX() ||
+				   pawnY > tile.getTop() || pawnY + pawnHeight < tile.getY()) {
+					
+					continue;
 				}
+				
+				return true;
 			}
 		}
 	
@@ -83,8 +87,6 @@ public final class PawnManager implements ManagerInterface {
 	}
 
 	public void update(final float delta) {
-		System.out.println("////////////////////////");
-		System.out.println("Frame  y:" + " " + player.getY());
 		// Handle controls
 		{
 			if(Gdx.input.isKeyJustPressed(Config.MoveUpKey)) {
@@ -119,32 +121,22 @@ public final class PawnManager implements ManagerInterface {
 		
 		// Move the player and check if movement was valid
 		{
-			final float playerX = player.getX();
-			final float playerY = player.getPlaneY();
-			final float playerWidth = player.getWidth();
-			final float playerHeight = player.getHeight();
-			
-			final int leftTile = (int)(playerX / tileWidth);
-			final int rightTile = (int)((playerX + playerWidth) / tileWidth);
-			final int bottomTile = (int)(playerY / tileHeight);
-			final int topTile = (int)((playerY + playerHeight) / tileHeight);
-			
 			final float validX = player.getX();
 			final float validY = player.getPlaneY();
 			
 			//X axis
 			player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
-			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
+			
+			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setX(validX);
 			}
-			System.out.println("Before y:" + " " + player.getY() +" "+ validY);
+			
 			//Y axis
 			player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
-			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
-				System.out.println("collision happened at "+player.getY());
+			
+			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setY(validY + player.getJumpDisplacement());
 			}
-			System.out.println("After  y:" + " " + player.getY() +" "+ validY);
 		}
 		
 		// Move minions
@@ -162,8 +154,8 @@ public final class PawnManager implements ManagerInterface {
 				tmpVector.set(requiredAmountX, requiredAmountY);
 				tmpVector.nor();
 				
-				final float amountX = delta * Config.MinionTilesPerSecond * tmpVector.x;
-				final float amountY = delta * Config.MinionTilesPerSecond * tmpVector.y;
+				final float amountX = delta * tileWidth * Config.MinionTilesPerSecond * tmpVector.x;
+				final float amountY = delta * tileHeight * Config.MinionTilesPerSecond * tmpVector.y;
 				
 				final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
 				final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);

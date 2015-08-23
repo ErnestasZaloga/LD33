@@ -7,6 +7,8 @@ import com.ld33.utils.steps.Steps;
 
 public abstract class Pawn extends SpriteActor {
 	
+	private final float depthHeightScaling;
+	
 	private float modY;
 	private final FloatStep.Listener modYListener = new FloatStep.Listener() {
 		@Override
@@ -17,14 +19,38 @@ public abstract class Pawn extends SpriteActor {
 		}
 	};
 	
+	private final float maxHealth;
 	private float health;
 	
-	public void damagePawn(float damage) {
+	public Pawn(final float maxHealth,
+				final float depthHeightScaling) {
+		
+		this.maxHealth = maxHealth;
+		this.depthHeightScaling = depthHeightScaling;
+	}
+	
+	public float getMaxHealth() {
+		return maxHealth;
+	}
+	
+	public float getHealth() {
+		return health;
+	}
+	
+	public void damagePawn(final float damage) {
 		this.health -= damage;
+		
+		if(health < 0f) {
+			health = 0f;
+		}
 	}
 
 	public float getPlaneY() {
 		return getY() - (getHeight() * Config.PawnAnimationJumpHeight) * modY;
+	}
+	
+	public float getCollisionHeight() {
+		return getHeight() * depthHeightScaling;
 	}
 	
 	public float getJumpDisplacement() {

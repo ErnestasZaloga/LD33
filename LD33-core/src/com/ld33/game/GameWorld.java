@@ -119,7 +119,7 @@ public class GameWorld extends Group {
 			final int rightTileX = (int)(player.getX() / app.getAssets().tileWidth);
 			final int tileY = (int)((player.getPlaneY()) / app.getAssets().tileHeight);
 
-//			player.setZIndex(mapData.getTileAtXYIndex(rightTileX, tileY).getZIndex() + 1);
+			player.setZIndex(mapData.getTileAtXYIndex(rightTileX, tileY).getZIndex() + 1);
 		}
 		
 		// Update culling position
