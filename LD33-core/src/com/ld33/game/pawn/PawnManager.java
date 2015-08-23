@@ -19,7 +19,7 @@ public final class PawnManager implements ManagerInterface {
 	private final MapData mapData;
 	private Group contentGroup;
 	
-	private Array<EnemyMinion> enemyMinions;
+	private final Array<EnemyMinion> enemyMinions = new Array<EnemyMinion>();
 	
 	private float boundsWidth;
 	private float boundsHeight;
@@ -43,12 +43,9 @@ public final class PawnManager implements ManagerInterface {
 			player.registerMinion(minion);
 		}
 		
-<<<<<<< HEAD
 		for(int i = 0; i < player.getMinionCount(); i += 1) {
 			player.getMinion(i).begin();
 		}
-=======
-		enemyMinions = new Array<EnemyMinion>();
 	}
 	
 	public void addEnemyMinion() {
@@ -56,7 +53,6 @@ public final class PawnManager implements ManagerInterface {
 		minion.setPosition(player.getX(), player.getY());
 		enemyMinions.add(minion);
 		contentGroup.addActor(minion);
->>>>>>> origin/master
 	}
 	
 	public void setBounds(final float boundsWidth,
@@ -232,13 +228,13 @@ public final class PawnManager implements ManagerInterface {
 	}
 
 	public void populate(final Group destination) {
+		this.contentGroup = destination;
+		
 		destination.addActor(player);
 		
 		for(int i = 0; i < player.getMinionCount(); i += 1) {
 			destination.addActor(player.getMinion(i));
 		}
-		
-		this.contentGroup = destination;
 	}
 	
 }

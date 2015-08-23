@@ -9,7 +9,7 @@ public class EnemyMinion extends Pawn {
 	private Player player;
 	
 	public EnemyMinion(App app, Player player) {
-		super(Config.MinionMaxHealth, app.getAssets().depthHeightScaling);
+		super(Config.MinionMaxHealth);
 		
 		this.app = app;
 		this.player = player;
