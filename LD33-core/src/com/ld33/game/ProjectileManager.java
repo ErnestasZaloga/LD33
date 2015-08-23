@@ -49,7 +49,7 @@ public class ProjectileManager implements ManagerInterface {
 			float dy = MathUtils.sinDeg(projectile.getRotation());
 			projectile.moveBy(dx, dy);
 			//Apply scaling
-			float targetScale = 0.85f;
+			float targetScale = 0.8f;
 			float percentageTravelled = projectile.getDistanceTraveled()/projectile.getRange();
 			float resultingScale = 1 + (targetScale - 1) * percentageTravelled;
 			projectile.setScale(resultingScale);

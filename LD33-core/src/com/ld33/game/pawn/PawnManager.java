@@ -3,6 +3,7 @@ package com.ld33.game.pawn;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
 import com.ld33.game.ManagerInterface;
@@ -16,6 +17,9 @@ public final class PawnManager implements ManagerInterface {
 	private final App app;
 	private final Player player;
 	private final MapData mapData;
+	private Group contentGroup;
+	
+	private Array<EnemyMinion> enemyMinions;
 	
 	private float boundsWidth;
 	private float boundsHeight;
@@ -38,6 +42,15 @@ public final class PawnManager implements ManagerInterface {
 			final Minion minion = new Minion(app, player);
 			player.registerMinion(minion);
 		}
+		
+		enemyMinions = new Array<EnemyMinion>();
+	}
+	
+	public void addEnemyMinion() {
+		final EnemyMinion minion = new EnemyMinion(app, player);
+		minion.setPosition(player.getX(), player.getY());
+		enemyMinions.add(minion);
+		contentGroup.addActor(minion);
 	}
 	
 	public void setBounds(final float boundsWidth,
@@ -194,6 +207,8 @@ public final class PawnManager implements ManagerInterface {
 		for(int i = 0; i < player.getMinionCount(); i += 1) {
 			destination.addActor(player.getMinion(i));
 		}
+		
+		this.contentGroup = destination;
 	}
 	
 }

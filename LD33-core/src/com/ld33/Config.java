@@ -7,6 +7,7 @@ public final class Config {
 	public static final char WallTile = '#';
 	public static final char GrassTile = '.';
 	public static final char BoltTower = 'x';
+	public static final char SpawnerTower = 's';
 	public static final char PlayerStartPosition = '@';
 
 	public static final float PawnAnimationJumpDuration = 0.2f;
@@ -34,5 +35,13 @@ public final class Config {
 	public static final float BoltTowerDamage = 2;
 	public static final float BoltTowerProjectileSpeed = 80f;
 	public static final float BoltTowerAttackInterval = 1.5f;
+	
+	/* Spawner tower */
+	public static final float SpawnerTowerHealth = 10f;
+	public static final float SpawnerTowerRange = 250f;
+	public static final float SpawnerTowerDamage = 1f;
+	public static final float SpawnerTowerProjectileSpeed = 115f;
+	public static final float SpawnerTowerAttackInterval = 1.2f;
+	public static final float SpawnerTowerSpecialActionInterval = 2f;
 	
 }
