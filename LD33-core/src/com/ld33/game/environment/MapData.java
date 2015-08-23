@@ -10,6 +10,7 @@ public class MapData {
 	private final int mapHeight;
 	private final int startX;
 	private final int startY;
+	private float tileWH;
 
 	public MapData(final Array<Tile> tiles,
 				   final int mapWidth,
@@ -58,6 +59,14 @@ public class MapData {
 	
 	public int getStartY() {
 		return startY;
+	}
+
+	public float getTileWH() {
+		return tileWH;
+	}
+
+	public void setTileWH(float tileWH) {
+		this.tileWH = tileWH;
 	}
 	
 }

@@ -35,6 +35,7 @@ public class GameWorld extends Group {
 		addActor(contentGroup);
 		
 		mapData = MapFactory.generateMap(app, Gdx.files.internal("maps/map1.txt").readString());
+		mapData.setTileWH(app.getAssets().tileWidth);
 		
 		contentGroup.setSize(
 				mapData.getMapWidth() * app.getAssets().tileWidth,

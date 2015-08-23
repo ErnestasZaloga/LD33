@@ -48,9 +48,9 @@ public final class PawnManager implements ManagerInterface {
 		}
 	}
 	
-	public void addEnemyMinion() {
+	public void addEnemyMinion(float spawnX, float spawnY) {
 		final EnemyMinion minion = new EnemyMinion(app, player);
-		minion.setPosition(player.getX(), player.getY());
+		minion.setPosition(spawnX, spawnY);
 		enemyMinions.add(minion);
 		contentGroup.addActor(minion);
 	}

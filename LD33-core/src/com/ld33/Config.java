@@ -16,7 +16,7 @@ public final class Config {
 	public static final float PlayerMaxHealth = 100;
 	public static final float PlayerTilesPerSecond = 2f;
 	public static final float PlayerMinionRadius = 20f; // Relative to vertical percent of the screen
-	public static final int PlayerInitialMinions = 10;
+	public static final int PlayerInitialMinions = 0;  //10
 	public static final float PlayerSmallMinionRadiusScalerMin = 0.2f;
 	public static final float PlayerSmallMinionRadiusScalerMax = 0.35f;
 	public static final float PlayerMidMinionRadiusScalerMin = 0.5f;
@@ -30,6 +30,9 @@ public final class Config {
 	public static final float MinionTilesPerSecond = 2f;
 	public static final float MinionMovementSpeedRandomizationMin = 0.9f;
 	public static final float MinionMovementSpeedRandomizationMax = 1.1f;
+	
+	public static final float EnemyMinionVisionRange = 235f;
+	public static final float EnemyMinionTilesPerSecond = 1.65f;
 	
 	public static final int MoveUpKey = Keys.W;
 	public static final int MoveLeftKey = Keys.A;
