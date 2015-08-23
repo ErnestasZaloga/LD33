@@ -31,6 +31,36 @@ public class EnvironmentManager implements ManagerInterface {
 			final float towerX = tileObject.getX();
 			final float towerY = tileObject.getY();
 			
+			/*float shortestDistance = distanceBetween(towerX, towerY, playerX, playerY);
+			Minion targetMinion = null;
+			//Look for player minions
+			for(int i=0; i<player.getMinionCount(); i++) {
+				Minion minion = player.getMinion(i);
+				float distance = distanceBetween(minion.getX(), minion.getPlaneY(), towerX, towerY);
+				if(distance <= tileObject.getRange()) {
+					if(distance < shortestDistance) {
+						targetMinion = minion;
+					}
+				}
+			}
+			if(targetMinion != null) {
+				if(tileObject.type == Config.BoltTower || tileObject.type == Config.SpawnerTower) {
+					tileObject.startCooldown();
+					gameWorld.getProjectileManager().createBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
+				}
+				else if(tileObject.type == Config.ElementalTower) {
+					tileObject.startCooldown();
+					if(MathUtils.randomBoolean()) {  //Decide to shoot fire or ice randomly
+						//Ice
+						gameWorld.getProjectileManager().createIceBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
+						
+					} else {
+						//Fire
+					}
+				}
+			}*/
+			
+			//Look for player
 			if(distanceBetween(towerX, towerY, playerX, playerY) <= tileObject.getRange()) {
 				if(tileObject.canAttack()) {
 					if(tileObject.type == Config.BoltTower || tileObject.type == Config.SpawnerTower) {
@@ -45,6 +75,7 @@ public class EnvironmentManager implements ManagerInterface {
 							
 						} else {
 							//Fire
+							gameWorld.getProjectileManager().createFireBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
 						}
 					}
 				}

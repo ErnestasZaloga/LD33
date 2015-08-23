@@ -27,7 +27,7 @@ public final class Config {
 	public static final float PlayerMaxHealth = 100;
 	public static final float PlayerTilesPerSecond = 2f;
 	public static final float PlayerMinionRadius = 20f; // Relative to vertical percent of the screen
-	public static final int PlayerInitialMinions = 1;
+	public static final int PlayerInitialMinions = 0;
 	public static final float PlayerSmallMinionRadiusScalerMin = 0.2f;
 	public static final float PlayerSmallMinionRadiusScalerMax = 0.35f;
 	public static final float PlayerMidMinionRadiusScalerMin = 0.5f;
@@ -52,6 +52,12 @@ public final class Config {
 	public static final int FormationLargeKey = Keys.NUM_3;
 	public static final int FormationMidKey = Keys.NUM_2;
 	public static final int FormationSmallKey = Keys.NUM_1;
+	
+	/* Effects */
+	public static final float IceEffectDuration = 3f;
+	public static final float IceEffectSlowModifier = 0.8f;
+	public static final float FireEffectDuration = 3f;
+	public static final float FireEffectDamageOverTick = 0.8f;
 	
 	/* Bolt tower */
 	public static final float BoltTowerHealth = 15f;

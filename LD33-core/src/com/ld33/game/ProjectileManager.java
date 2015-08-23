@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
 import com.ld33.game.Projectile.DamageType;
+import com.ld33.game.effects.Effect;
 import com.ld33.game.pawn.Pawn;
 
 public class ProjectileManager implements ManagerInterface {
@@ -120,19 +121,21 @@ public class ProjectileManager implements ManagerInterface {
 				if(player.getPlaneY() <= projectile.getY()+projectile.getHeight() && projectile.getY() <= player.getPlaneY()+player.getHeight()) {  //Y axis
 					player.damagePawn(projectile.getDamage());
 					//Apply special effects
-					//...
+					if(projectile.getDamageType() == DamageType.ICE) {
+						player.addEffect(new Effect(Config.IceEffectDuration, Config.IceEffectSlowModifier, 0f));
+					} else if(projectile.getDamageType() == DamageType.FIRE) {
+						player.addEffect(new Effect(Config.FireEffectDuration, 0f, Config.FireEffectDamageOverTick));
+					}
 					
 					projectiles.removeValue(projectile, true);
 					projectile.remove();
 				}
 			}
 			//Check for collisions with pawns TODO
+			//...
 			//Check if max range is reached
 			projectile.increaseDistanceTraveled((float)Math.sqrt((float)(dx*dx+dy*dy)));
 			if(projectile.getDistanceTraveled() >= projectile.getRange()) {
-				//Apply special effects
-				//...TODO
-				
 				projectiles.removeValue(projectile, true);
 				projectile.remove();
 			}

@@ -1,6 +1,8 @@
 package com.ld33.game.pawn;
 
+import com.badlogic.gdx.utils.Array;
 import com.ld33.Config;
+import com.ld33.game.effects.Effect;
 import com.ld33.utils.SpriteActor;
 import com.ld33.utils.steps.FloatStep;
 import com.ld33.utils.steps.Steps;
@@ -20,6 +22,9 @@ public abstract class Pawn extends SpriteActor {
 	public static enum CombatType {
 		MELEE, RANGED, MAGICAL
 	};
+	
+	private Array<Effect> effects = new Array<Effect>();
+	private float effectSlowMultiplier = 0f;
 	
 	/* Stats */
 	private final float maxHealth;
@@ -113,6 +118,14 @@ public abstract class Pawn extends SpriteActor {
 		return getHeight() * Config.PawnAnimationJumpHeight * modY;
 	}
 	
+	public float getEffectSlowMultiplier() {
+		return effectSlowMultiplier;
+	}
+
+	public void addEffect(Effect e) {
+		effects.add(e);
+	}
+	
 	@Override
 	public void act(final float delta) {
 		final float jumpHeight = getHeight() * Config.PawnAnimationJumpHeight;
@@ -123,6 +136,23 @@ public abstract class Pawn extends SpriteActor {
 		super.act(delta);
 		
 		setY(realY + jumpHeight * modY);
+		
+		//Remove dead effects
+		for(int i=0; i<effects.size; i++) {
+			if(effects.get(i).isFinished()) {
+				effects.removeValue(effects.get(i), true);
+			}
+		}
+		//Update and apply effects
+		for(int i=0; i<effects.size; i++) {
+			effects.get(i).update(delta);
+			if(effects.get(i).applyEffect) {
+				effects.get(i).tickComplete();
+//				System.out.println("HP: " + this.health);
+				this.damagePawn(effects.get(i).getDamageOverTick());
+				this.effectSlowMultiplier = effects.get(i).getSlowMultiplier();
+			}
+		}
 		
 		//Combat stuff
 		timeUntilAttack -= delta;

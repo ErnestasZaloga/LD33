@@ -2,10 +2,10 @@ package com.ld33.game.effects;
 
 public class Effect {
 
-	private float duration = 0;
-	private float tick = 0.5f;
-	private float timeUntilNextTick = 0;
-	private boolean applyAction = true;
+	private float duration;
+	private float tick = 1f;
+	private float timeUntilNextTick = 0f;
+	public boolean applyEffect = true;
 	private boolean finished = false;
 	
 	private float slowMultiplier = 0;
@@ -23,20 +23,29 @@ public class Effect {
 		timeUntilNextTick -= delta;
 		if(timeUntilNextTick < 0) {
 			timeUntilNextTick = 0;
-			applyAction = true;
+			applyEffect = true;
 			duration -= tick;
-			if(duration <= 0) {
-				finished = true;
-			}
+		}
+		if(duration <= 0) {
+			finished = true;
+			slowMultiplier = 1f;
 		}
 	}
 	
 	public void tickComplete() {
-		applyAction = false;
+		applyEffect = false;
 	}
 
 	public boolean isFinished() {
 		return finished;
+	}
+
+	public float getSlowMultiplier() {
+		return slowMultiplier;
+	}
+
+	public float getDamageOverTick() {
+		return damageOverTick;
 	}
 	
 }
