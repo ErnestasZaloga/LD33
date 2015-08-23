@@ -9,8 +9,10 @@ import com.ld33.App;
 import com.ld33.Config;
 import com.ld33.game.ManagerInterface;
 import com.ld33.game.ProjectileManager;
+import com.ld33.game.environment.EnvironmentManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.Tile;
+import com.ld33.game.environment.TileObject;
 
 public final class PawnManager implements ManagerInterface {
 
@@ -118,7 +120,6 @@ public final class PawnManager implements ManagerInterface {
 			if(Gdx.input.justTouched()) {
 				if(player.canAttack()) {
 					player.resetAttackCooldown();
-					System.out.println("player attack!");
 					Vector2 screenClickXY = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight()-Gdx.input.getY());
 					Vector2 worldClickXY = contentGroup.stageToLocalCoordinates(screenClickXY);
 					projectileManager.createFriendlyAttack(player, worldClickXY.x, worldClickXY.y);
@@ -227,14 +228,68 @@ public final class PawnManager implements ManagerInterface {
 						minion.setY(validY + minion.getJumpDisplacement());
 					}
 				}
+				//Make minions attack, if there are enemies nearby
+				//Look for nearby towers
+				float nearestTargetX = 0;
+				float nearestTargetY = 0;
+				float shortestDistance = (float)Math.sqrt((mapData.getTileObjects().get(0).getX()-minion.getX())*(mapData.getTileObjects().get(0).getX()-minion.getX())+(mapData.getTileObjects().get(0).getY()-minion.getPlaneY())*(mapData.getTileObjects().get(0).getY()-minion.getPlaneY()));
+				for(TileObject tower : mapData.getTileObjects()) {
+					float dx = tower.getX()-minion.getX();
+					float dy = tower.getY()-minion.getPlaneY();
+					float distance = (float)Math.sqrt(dx*dx+dy*dy);
+					if(distance < shortestDistance) {
+						nearestTargetX = tower.getX();
+						nearestTargetY = tower.getY();
+						shortestDistance = distance;
+					}
+				}
+				//Look for nearby enemy minions
+				for(EnemyMinion enemyMinion : enemyMinions) {
+					float dx = enemyMinion.getX()-minion.getX();
+					float dy = enemyMinion.getPlaneY()-minion.getPlaneY();
+					float distance = (float)Math.sqrt(dx*dx+dy*dy);
+					if(distance < shortestDistance) {
+						nearestTargetX = enemyMinion.getX();
+						nearestTargetY = enemyMinion.getPlaneY();
+						shortestDistance = distance;
+					}
+				}
+				//Shoot at nearest target if it is in range
+				if(minion.canAttack()) {
+					minion.resetAttackCooldown();
+					projectileManager.createFriendlyAttack(minion, nearestTargetX, nearestTargetY);
+				}
 			}
 			//Enemy minions
 			for(EnemyMinion enemyMinion : enemyMinions) {
 				if(!enemyMinion.isActive()) continue;
 //				enemyMinion.moveBy(Config.EnemyMinionTilesPerSecond*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
 //						Config.EnemyMinionTilesPerSecond*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
+				//Move
 				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
 						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
+				//Shoot
+				//Look for player nearby
+				float nearestTargetX = player.getX();
+				float nearestTargetY = player.getPlaneY();
+				float shortestDistance = (float)Math.sqrt((player.getX()-enemyMinion.getX())*(player.getX()-enemyMinion.getX())+(player.getPlaneY()-enemyMinion.getPlaneY())*(player.getPlaneY()-enemyMinion.getPlaneY()));
+				//Look for minions nearby
+				for(int ii=0; ii<player.getMinionCount(); ii++) {
+					Pawn minion = player.getMinion(ii);
+					float dx = minion.getX()-enemyMinion.getX();
+					float dy = minion.getPlaneY()-enemyMinion.getPlaneY();
+					float distance = (float)Math.sqrt(dx*dx+dy*dy);
+					if(distance < shortestDistance) {
+						nearestTargetX = minion.getX();
+						nearestTargetY = minion.getPlaneY();
+						shortestDistance = distance;
+					}
+				}
+				//Shoot at nearest target
+				if(enemyMinion.canAttack()) {
+					enemyMinion.resetAttackCooldown();
+					projectileManager.createUnfriendlyAttack(enemyMinion, nearestTargetX, nearestTargetY);
+				}
 			}
 		}
 		

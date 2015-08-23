@@ -52,6 +52,20 @@ public class ProjectileManager implements ManagerInterface {
 		gameWorld.contentGroup.addActor(p);
 	}
 	
+	public void createUnfriendlyAttack(Pawn attacker, float targetX, float targetY) {
+		Projectile p = new Projectile(app.getAssets().projectileRegion);
+		p.setPosition(attacker.getX(), attacker.getPlaneY());
+		p.setDamage(attacker.getDamage());
+		p.setRange(attacker.getAttackRange());
+		p.setSpeed(attacker.getProjectileSpeed());
+		float dx = targetX-attacker.getX();
+		float dy = targetY-attacker.getPlaneY();
+		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
+		projectiles.add(p);
+		
+		gameWorld.contentGroup.addActor(p);
+	}
+	
 	public Array<Projectile> getProjectiles() {
 		return projectiles;
 	}
