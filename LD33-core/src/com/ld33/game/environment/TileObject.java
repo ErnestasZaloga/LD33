@@ -47,6 +47,14 @@ public class TileObject extends Tile {
 			this.specialActionInterval = Config.SpawnerTowerSpecialActionInterval;
 			this.hasSpecialAction = true;
 		}
+		else if(type == Config.ElementalTower) {
+			this.health = Config.ElementalTowerHealth;
+			this.range = Config.ElementalTowerRange;
+			this.damage = Config.ElementalTowerDamage;
+			this.attackInterval = Config.ElementalTowerAttackInterval;
+			this.specialActionInterval = -1f;
+			this.hasSpecialAction = false;
+		}
 	}
 
 	public float getHealth() {

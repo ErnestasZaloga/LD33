@@ -1,6 +1,8 @@
 package com.ld33.game.environment;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.ld33.Config;
 import com.ld33.game.GameWorld;
 import com.ld33.game.ManagerInterface;
 import com.ld33.game.pawn.PawnManager;
@@ -31,8 +33,20 @@ public class EnvironmentManager implements ManagerInterface {
 			
 			if(distanceBetween(towerX, towerY, playerX, playerY) <= tileObject.getRange()) {
 				if(tileObject.canAttack()) {
-					tileObject.startCooldown();
-					gameWorld.getProjectileManager().createBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
+					if(tileObject.type == Config.BoltTower || tileObject.type == Config.SpawnerTower) {
+						tileObject.startCooldown();
+						gameWorld.getProjectileManager().createBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
+					}
+					else if(tileObject.type == Config.ElementalTower) {
+						tileObject.startCooldown();
+						if(MathUtils.randomBoolean()) {  //Decide to shoot fire or ice randomly
+							//Ice
+							gameWorld.getProjectileManager().createIceBolt(towerX+tileObject.getWidth()/2, towerY+tileObject.getHeight()/2, playerX+player.getWidth()/2, playerY+player.getHeight()/2);
+							
+						} else {
+							//Fire
+						}
+					}
 				}
 				if(tileObject.canPerformSpecialAction()) {
 					tileObject.startSpecialActionCooldown();

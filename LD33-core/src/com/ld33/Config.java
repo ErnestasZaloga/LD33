@@ -8,14 +8,18 @@ public final class Config {
 	public static final char GrassTile = '.';
 	public static final char BoltTower = 'x';
 	public static final char SpawnerTower = 's';
+	public static final char ElementalTower = 'e';
 	public static final char PlayerStartPosition = '@';
 	
 	public static final float MeleeAttackRange = 25f;
 	public static final float MeleeAttackInterval = 0.8f;
+	public static final float MeleeProjectileSpeed = 200f;
 	public static final float RangedAttackRange = 150f;
 	public static final float RangedAttackInterval = 1.9f;
+	public static final float RangedProjectileSpeed = 140f;
 	public static final float MagicalAttackRange = 90f;
 	public static final float MagicalAttackInterval = 1.3f;
+	public static final float MagicalProjectileSpeed = 90f;
 
 	public static final float PawnAnimationJumpDuration = 0.2f;
 	public static final float PawnAnimationJumpHeight = 0.2f; // Relative to pawn's height
@@ -23,7 +27,7 @@ public final class Config {
 	public static final float PlayerMaxHealth = 100;
 	public static final float PlayerTilesPerSecond = 2f;
 	public static final float PlayerMinionRadius = 20f; // Relative to vertical percent of the screen
-	public static final int PlayerInitialMinions = 5;
+	public static final int PlayerInitialMinions = 0;
 	public static final float PlayerSmallMinionRadiusScalerMin = 0.2f;
 	public static final float PlayerSmallMinionRadiusScalerMax = 0.35f;
 	public static final float PlayerMidMinionRadiusScalerMin = 0.5f;
@@ -63,5 +67,12 @@ public final class Config {
 	public static final float SpawnerTowerProjectileSpeed = 115f;
 	public static final float SpawnerTowerAttackInterval = 1.2f;
 	public static final float SpawnerTowerSpecialActionInterval = 2f;
+	
+	/* Elemental tower */
+	public static final float ElementalTowerHealth = 8f;
+	public static final float ElementalTowerRange = 320f;
+	public static final float ElementalTowerDamage = 4f;
+	public static final float ElementalTowerProjectileSpeed = 500f;
+	public static final float ElementalTowerAttackInterval = 4.5f;
 	
 }

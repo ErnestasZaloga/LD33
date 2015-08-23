@@ -53,6 +53,12 @@ public class MapFactory {
 					tile = tower;
 					tileObjects.add(tower);
 				}
+				else if(ch == Config.ElementalTower) {
+					final TileObject tower = new TileObject(ch, x, y);
+					region = app.getAssets().towerRegion;  //TODO select proper texture
+					tile = tower;
+					tileObjects.add(tower);
+				}
 				else if(ch == Config.PlayerStartPosition) {
 					if(startX != -1 || startY != -1) {
 						throw new RuntimeException("Player position already set");

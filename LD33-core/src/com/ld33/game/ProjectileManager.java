@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
+import com.ld33.game.Projectile.DamageType;
 import com.ld33.game.pawn.Pawn;
 
 public class ProjectileManager implements ManagerInterface {
@@ -30,6 +31,37 @@ public class ProjectileManager implements ManagerInterface {
 		p.setDamage(Config.BoltTowerDamage);
 		p.setRange(Config.BoltTowerRange);
 		p.setSpeed(Config.BoltTowerProjectileSpeed);
+		p.setDamageType(DamageType.PHYSICAL);
+		float dx = targetX-x;
+		float dy = targetY-y;
+		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
+		projectiles.add(p);
+		
+		gameWorld.contentGroup.addActor(p);
+	}
+	
+	public void createIceBolt(float x, float y, float targetX, float targetY) {
+		Projectile p = new Projectile(app.getAssets().projectileRegion);
+		p.setPosition(x, y);
+		p.setDamage(Config.ElementalTowerDamage);
+		p.setRange(Config.ElementalTowerRange);
+		p.setSpeed(Config.ElementalTowerProjectileSpeed);
+		p.setDamageType(DamageType.ICE);
+		float dx = targetX-x;
+		float dy = targetY-y;
+		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
+		projectiles.add(p);
+		
+		gameWorld.contentGroup.addActor(p);
+	}
+	
+	public void createFireBolt(float x, float y, float targetX, float targetY) {
+		Projectile p = new Projectile(app.getAssets().projectileRegion);
+		p.setPosition(x, y);
+		p.setDamage(Config.ElementalTowerDamage);
+		p.setRange(Config.ElementalTowerRange);
+		p.setSpeed(Config.ElementalTowerProjectileSpeed);
+		p.setDamageType(DamageType.FIRE);
 		float dx = targetX-x;
 		float dy = targetY-y;
 		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
@@ -75,8 +107,8 @@ public class ProjectileManager implements ManagerInterface {
 		Pawn player = gameWorld.getPawnManager().getPlayer();
 		for(final Projectile projectile : projectiles) {
 			//Move
-			float dx = MathUtils.cosDeg(projectile.getRotation());
-			float dy = MathUtils.sinDeg(projectile.getRotation());
+			float dx = MathUtils.cosDeg(projectile.getRotation() * delta * projectile.getSpeed());
+			float dy = MathUtils.sinDeg(projectile.getRotation() * delta * projectile.getSpeed());
 			projectile.moveBy(dx, dy);
 			//Apply scaling
 			float targetScale = 0.8f;
@@ -87,6 +119,9 @@ public class ProjectileManager implements ManagerInterface {
 			if(player.getX() <= projectile.getX()+projectile.getWidth() && projectile.getX() <= player.getX()+player.getWidth()) {  //X axis
 				if(player.getY() <= projectile.getY()+projectile.getHeight() && projectile.getY() <= player.getY()+player.getHeight()) {  //Y axis
 					player.damagePawn(projectile.getDamage());
+					//Apply special effects
+					//...
+					
 					projectiles.removeValue(projectile, true);
 					projectile.remove();
 				}
@@ -95,6 +130,9 @@ public class ProjectileManager implements ManagerInterface {
 			//Check if max range is reached
 			projectile.increaseDistanceTraveled((float)Math.sqrt((float)(dx*dx+dy*dy)));
 			if(projectile.getDistanceTraveled() >= projectile.getRange()) {
+				//Apply special effects
+				//...TODO
+				
 				projectiles.removeValue(projectile, true);
 				projectile.remove();
 			}
@@ -103,8 +141,8 @@ public class ProjectileManager implements ManagerInterface {
 		//Friendly projectiles
 		for(final Projectile projectile : friendlyProjectiles) {
 			//Move
-			float dx = MathUtils.cosDeg(projectile.getRotation());
-			float dy = MathUtils.sinDeg(projectile.getRotation());
+			float dx = MathUtils.cosDeg(projectile.getRotation() * delta * projectile.getSpeed());
+			float dy = MathUtils.sinDeg(projectile.getRotation() * delta * projectile.getSpeed());
 			projectile.moveBy(dx, dy);
 			//Apply scaling
 			float targetScale = 0.8f;

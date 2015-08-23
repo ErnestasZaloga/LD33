@@ -43,19 +43,19 @@ public abstract class Pawn extends SpriteActor {
 			this.attackRange = Config.MeleeAttackRange;
 			this.attackInterval = Config.MeleeAttackInterval;
 			this.damage = 3f;
-			this.projectileSpeed = 120f;
+			this.projectileSpeed = Config.MeleeProjectileSpeed;
 		}
 		else if(combatType == CombatType.RANGED) {
 			this.attackRange = Config.RangedAttackRange;
 			this.attackInterval = Config.RangedAttackInterval;
 			this.damage = 3f;
-			this.projectileSpeed = 120f;
+			this.projectileSpeed = Config.RangedProjectileSpeed;
 		}
 		else if(combatType == CombatType.MAGICAL) {
 			this.attackRange = Config.MagicalAttackRange;
 			this.attackInterval = Config.MagicalAttackInterval;
 			this.damage = 3f;
-			this.projectileSpeed = 120f;
+			this.projectileSpeed = Config.MagicalProjectileSpeed;
 		}
 		this.movementSpeed = 2f;
 		

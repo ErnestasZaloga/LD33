@@ -5,10 +5,15 @@ import com.workforfood.devkit.TextureRegionExt;
 
 public class Projectile extends SpriteActor {
 	
+	public static enum DamageType {
+		PHYSICAL, ICE, FIRE
+	};
+	
 	private float damage;
 	private float range;
 	private float speed;
 	private float distanceTraveled = 0;
+	private DamageType damageType;
 	
 	public Projectile(TextureRegionExt region) {
 		this.setRegion(region);
@@ -44,6 +49,14 @@ public class Projectile extends SpriteActor {
 
 	public void increaseDistanceTraveled(float delta) {
 		this.distanceTraveled += delta;
+	}
+
+	public DamageType getDamageType() {
+		return damageType;
+	}
+
+	public void setDamageType(DamageType damageType) {
+		this.damageType = damageType;
 	}
 	
 }
