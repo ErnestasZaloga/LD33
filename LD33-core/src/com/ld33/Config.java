@@ -9,6 +9,13 @@ public final class Config {
 	public static final char BoltTower = 'x';
 	public static final char SpawnerTower = 's';
 	public static final char PlayerStartPosition = '@';
+	
+	public static final float MeleeAttackRange = 25f;
+	public static final float MeleeAttackInterval = 0.8f;
+	public static final float RangedAttackRange = 150f;
+	public static final float RangedAttackInterval = 0.2f;//1.9f;
+	public static final float MagicalAttackRange = 90f;
+	public static final float MagicalAttackInterval = 1.3f;
 
 	public static final float PawnAnimationJumpDuration = 0.2f;
 	public static final float PawnAnimationJumpHeight = 0.2f; // Relative to pawn's height

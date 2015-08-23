@@ -1,6 +1,5 @@
 package com.ld33.game.pawn;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.ld33.App;
 import com.ld33.Config;
 
@@ -10,6 +9,7 @@ public class EnemyMinion extends Pawn {
 	private Player player;
 	private float direction = 0;
 	private float range = Config.EnemyMinionVisionRange;
+	private boolean active = false;
 	
 	public EnemyMinion(App app, Player player) {
 		super(Config.MinionMaxHealth);
@@ -22,15 +22,18 @@ public class EnemyMinion extends Pawn {
 	
 	@Override
 	public void act(final float delta) {
-		if(!playerInRange()) return;
-		
-		setDirection();
-		this.moveBy(Config.EnemyMinionTilesPerSecond*delta*MathUtils.cosDeg(direction), Config.EnemyMinionTilesPerSecond*delta*MathUtils.sinDeg(direction));
+		super.act(delta);
+		if(playerInRange()) {
+			setActive(true);
+		} else {
+			setActive(false);
+		}
+		calculateDirection();
 	}
 	
 	private boolean playerInRange() {
 		float dx = player.getX()-this.getX();
-		float dy = player.getY()-this.getY();
+		float dy = player.getPlaneY()-this.getPlaneY();
 		float distance = (float)Math.sqrt(dx*dx+dy*dy);
 		if(distance <= range) {
 			return true;
@@ -38,10 +41,27 @@ public class EnemyMinion extends Pawn {
 		return false;
 	}
 	
-	private void setDirection() {
+	private void calculateDirection() {
 		float dx = player.getX()-this.getX();
-		float dy = player.getY()-this.getY();
+		float dy = player.getPlaneY()-this.getPlaneY();
 		direction = (float)(Math.atan2(dy, dx) * 180/Math.PI);
+	}
+
+	public float getDirection() {
+		return direction;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		if(active && !this.active) {
+			startMovementAnimation();
+		} else if(!active && this.active) {
+			endMovementAnimation();
+		}
+		this.active = active;
 	}
 
 }

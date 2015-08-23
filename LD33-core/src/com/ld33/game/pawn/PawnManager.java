@@ -1,12 +1,14 @@
 package com.ld33.game.pawn;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
 import com.ld33.game.ManagerInterface;
+import com.ld33.game.ProjectileManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.Tile;
 
@@ -18,6 +20,7 @@ public final class PawnManager implements ManagerInterface {
 	private final Player player;
 	private final MapData mapData;
 	private Group contentGroup;
+	private ProjectileManager projectileManager;
 	
 	private final Array<EnemyMinion> enemyMinions = new Array<EnemyMinion>();
 	
@@ -112,6 +115,16 @@ public final class PawnManager implements ManagerInterface {
 	public void update(final float delta) {
 		// Handle controls
 		{
+			if(Gdx.input.justTouched()) {
+				if(player.canAttack()) {
+					player.resetAttackCooldown();
+					System.out.println("player attack!");
+					Vector2 screenClickXY = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight()-Gdx.input.getY());
+					Vector2 worldClickXY = contentGroup.stageToLocalCoordinates(screenClickXY);
+					projectileManager.createFriendlyAttack(player, worldClickXY.x, worldClickXY.y);
+				}
+			}
+			
 			if(Gdx.input.isKeyJustPressed(Config.MoveUpKey)) {
 				player.startMoveUp();
 			}
@@ -158,14 +171,16 @@ public final class PawnManager implements ManagerInterface {
 			final float validY = player.getPlaneY();
 			
 			// X axis
-			player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
+			//player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
+			player.moveBy(delta * player.getMovementSpeed() * tileWidth * player.getHorizontalMovementState(), 0f);
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setX(validX);
 			}
 			
 			// Y axis
-			player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
+			//player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
+			player.moveBy(0f, delta * player.getMovementSpeed() * tileHeight * player.getVerticalMovementState());
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setY(validY + player.getJumpDisplacement());
@@ -190,8 +205,10 @@ public final class PawnManager implements ManagerInterface {
 				tmpVector.set(requiredAmountX, requiredAmountY);
 				tmpVector.nor();
 				
-				final float amountX = delta * tileWidth * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.x;
-				final float amountY = delta * tileHeight * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.y;
+//				final float amountX = delta * tileWidth * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.x;
+//				final float amountY = delta * tileHeight * Config.MinionTilesPerSecond * minion.getMovementSpeedScaler() * tmpVector.y;
+				final float amountX = delta * tileWidth * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.x;
+				final float amountY = delta * tileHeight * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.y;
 				
 				if(requiredAmountX != 0f) {
 					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
@@ -210,6 +227,14 @@ public final class PawnManager implements ManagerInterface {
 						minion.setY(validY + minion.getJumpDisplacement());
 					}
 				}
+			}
+			//Enemy minions
+			for(EnemyMinion enemyMinion : enemyMinions) {
+				if(!enemyMinion.isActive()) continue;
+//				enemyMinion.moveBy(Config.EnemyMinionTilesPerSecond*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
+//						Config.EnemyMinionTilesPerSecond*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
+				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth,
+						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth);
 			}
 		}
 		
@@ -233,6 +258,10 @@ public final class PawnManager implements ManagerInterface {
 				player.setY(player.getJumpDisplacement());
 			}
 		}
+	}
+	
+	public void addProjectileManager(ProjectileManager projectileManager) {
+		this.projectileManager = projectileManager;
 	}
 
 	public void populate(final Group destination) {

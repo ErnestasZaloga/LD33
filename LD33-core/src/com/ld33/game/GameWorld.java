@@ -83,6 +83,8 @@ public class GameWorld extends Group {
 		environmentManager = new EnvironmentManager(this, pawnManager, mapData);
 		projectileManager = new ProjectileManager(app, this);
 		
+		pawnManager.addProjectileManager(projectileManager);
+		
 		managers.add(pawnManager);
 		managers.add(environmentManager);
 		managers.add(projectileManager);

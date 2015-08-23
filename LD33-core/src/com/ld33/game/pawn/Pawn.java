@@ -17,12 +17,56 @@ public abstract class Pawn extends SpriteActor {
 		}
 	};
 	
+	public static enum CombatType {
+		MELEE, RANGED, MAGICAL
+	};
+	
+	/* Stats */
 	private final float maxHealth;
 	private float health;
+	private CombatType combatType;
+	private float visionRange;
+	private float attackRange;
+	private float attackInterval;
+	private float timeUntilAttack = 0;
+	private float movementSpeed;
+	private float projectileSpeed;
+	private float damage;
 	
 	public Pawn(final float maxHealth) {
+		/* Set stats TODO remove hardcoding*/
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
+		this.combatType = CombatType.RANGED;
+		this.visionRange = 250f;
+		if(combatType == CombatType.MELEE) {
+			this.attackRange = Config.MeleeAttackRange;
+			this.attackInterval = Config.MeleeAttackInterval;
+			this.damage = 3f;
+			this.projectileSpeed = 120f;
+		}
+		else if(combatType == CombatType.RANGED) {
+			this.attackRange = Config.RangedAttackRange;
+			this.attackInterval = Config.RangedAttackInterval;
+			this.damage = 3f;
+			this.projectileSpeed = 120f;
+		}
+		else if(combatType == CombatType.MAGICAL) {
+			this.attackRange = Config.MagicalAttackRange;
+			this.attackInterval = Config.MagicalAttackInterval;
+			this.damage = 3f;
+			this.projectileSpeed = 120f;
+		}
+		this.movementSpeed = 2f;
+		
+	}
+	
+	public boolean canAttack() {
+		return timeUntilAttack <= 0;
+	}
+	
+	public void resetAttackCooldown() {
+		timeUntilAttack = attackInterval;
 	}
 	
 	public float getMaxHealth() {
@@ -33,12 +77,28 @@ public abstract class Pawn extends SpriteActor {
 		return health;
 	}
 	
+	public float getAttackRange() {
+		return attackRange;
+	}
+
+	public float getDamage() {
+		return damage;
+	}
+
+	public float getProjectileSpeed() {
+		return projectileSpeed;
+	}
+
 	public void damagePawn(final float damage) {
 		this.health -= damage;
 		
 		if(health < 0f) {
 			health = 0f;
 		}
+	}
+
+	public float getMovementSpeed() {
+		return movementSpeed;
 	}
 
 	public float getPlaneY() {
@@ -63,6 +123,10 @@ public abstract class Pawn extends SpriteActor {
 		super.act(delta);
 		
 		setY(realY + jumpHeight * modY);
+		
+		//Combat stuff
+		timeUntilAttack -= delta;
+		if(timeUntilAttack < 0) timeUntilAttack = 0;
 	}
 	
 	protected void startMovementAnimation() {

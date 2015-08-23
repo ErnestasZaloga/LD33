@@ -12,6 +12,7 @@ public class ProjectileManager implements ManagerInterface {
 	private final GameWorld gameWorld;
 	
 	private Array<Projectile> projectiles;
+	private Array<Projectile> friendlyProjectiles;
 	
 	public ProjectileManager(final App app,
 							 final GameWorld gameWorld) {
@@ -20,6 +21,7 @@ public class ProjectileManager implements ManagerInterface {
 		this.gameWorld = gameWorld;
 		
 		projectiles = new Array<Projectile>();
+		friendlyProjectiles = new Array<Projectile>();
 	}
 
 	public void createBolt(float x, float y, float targetX, float targetY) {
@@ -32,6 +34,20 @@ public class ProjectileManager implements ManagerInterface {
 		float dy = targetY-y;
 		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
 		projectiles.add(p);
+		
+		gameWorld.contentGroup.addActor(p);
+	}
+	
+	public void createFriendlyAttack(Pawn attacker, float targetX, float targetY) {
+		Projectile p = new Projectile(app.getAssets().projectileRegion);
+		p.setPosition(attacker.getX(), attacker.getPlaneY());
+		p.setDamage(attacker.getDamage());
+		p.setRange(attacker.getAttackRange());
+		p.setSpeed(attacker.getProjectileSpeed());
+		float dx = targetX-attacker.getX();
+		float dy = targetY-attacker.getPlaneY();
+		p.setRotation((float)(Math.atan2(dy, dx) * 180/Math.PI));
+		friendlyProjectiles.add(p);
 		
 		gameWorld.contentGroup.addActor(p);
 	}
@@ -62,6 +78,29 @@ public class ProjectileManager implements ManagerInterface {
 				}
 			}
 			//Check for collisions with pawns TODO
+			//Check if max range is reached
+			projectile.increaseDistanceTraveled((float)Math.sqrt((float)(dx*dx+dy*dy)));
+			if(projectile.getDistanceTraveled() >= projectile.getRange()) {
+				projectiles.removeValue(projectile, true);
+				projectile.remove();
+			}
+		}
+		
+		//Friendly projectiles
+		for(final Projectile projectile : friendlyProjectiles) {
+			//Move
+			float dx = MathUtils.cosDeg(projectile.getRotation());
+			float dy = MathUtils.sinDeg(projectile.getRotation());
+			projectile.moveBy(dx, dy);
+			//Apply scaling
+			float targetScale = 0.8f;
+			float percentageTravelled = projectile.getDistanceTraveled()/projectile.getRange();
+			float resultingScale = 1 + (targetScale - 1) * percentageTravelled;
+			projectile.setScale(resultingScale);
+			//Check for collisions with towers
+			
+			//Check for collisions with pawns TODO
+			//Check if max range is reached
 			projectile.increaseDistanceTraveled((float)Math.sqrt((float)(dx*dx+dy*dy)));
 			if(projectile.getDistanceTraveled() >= projectile.getRange()) {
 				projectiles.removeValue(projectile, true);
