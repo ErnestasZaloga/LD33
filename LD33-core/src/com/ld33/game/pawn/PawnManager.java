@@ -1,6 +1,7 @@
 package com.ld33.game.pawn;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.ld33.App;
 import com.ld33.Config;
@@ -10,6 +11,8 @@ import com.ld33.game.environment.Tile;
 
 public final class PawnManager implements ManagerInterface {
 
+	private static final Vector2 tmpVector = new Vector2();
+	
 	private final App app;
 	private final Player player;
 	private final MapData mapData;
@@ -31,6 +34,11 @@ public final class PawnManager implements ManagerInterface {
 		player.setPosition(
 				tileWidth * mapData.getStartX() + tileWidth / 2f - player.getWidth() / 2f,
 				tileHeight * mapData.getStartY() + tileHeight / 2f - player.getHeight() / 2f);
+		
+		for(int i = 0; i < Config.PlayerInitialMinions; i += 1) {
+			final Minion minion = new Minion(app, player);
+			player.registerMinion(minion);
+		}
 	}
 	
 	public void setBounds(final float boundsWidth,
@@ -104,11 +112,11 @@ public final class PawnManager implements ManagerInterface {
 			}
 		}
 
+		final float tileWidth = app.getAssets().tileWidth;
+		final float tileHeight = app.getAssets().tileHeight;
+		
 		// Move the player and check if movement was valid
 		{
-			final float tileWidth = app.getAssets().tileWidth;
-			final float tileHeight = app.getAssets().tileHeight;
-			
 			final float playerX = player.getX();
 			final float playerY = player.getPlaneY();
 			final float playerWidth = player.getWidth();
@@ -122,16 +130,43 @@ public final class PawnManager implements ManagerInterface {
 			final float validX = player.getX();
 			final float validY = player.getPlaneY();
 			
-			player.moveBy(delta * Config.PlayerTps * tileWidth * player.getHorizontalMovementState(), 0f);
+			player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
 			
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
 				player.setX(validX);
 			}
 			
-			player.moveBy(0f, delta * Config.PlayerTps * tileHeight * player.getVerticalMovementState());
+			player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
 
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
 				player.setY(validY + player.getJumpDisplacement());
+			}
+		}
+		
+		// Move minions
+		{
+			for(int i = 0; i < player.getMinionCount(); i += 1) {
+				final Minion minion = player.getMinion(i);
+				
+				if(minion.getState() != Minion.State.moving) {
+					continue;
+				}
+				
+				final float requiredAmountX = minion.calcTargetX() - minion.getX();
+				final float requiredAmountY = minion.calcTargetY() - minion.getPlaneY();
+				
+				tmpVector.set(requiredAmountX, requiredAmountY);
+				tmpVector.nor();
+				
+				final float amountX = delta * Config.MinionTilesPerSecond * tmpVector.x;
+				final float amountY = delta * Config.MinionTilesPerSecond * tmpVector.y;
+				
+				final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
+				final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
+				
+				minion.moveBy(
+					requiredAmountX * scaleX,
+					requiredAmountY * scaleY);
 			}
 		}
 		
@@ -159,6 +194,10 @@ public final class PawnManager implements ManagerInterface {
 
 	public void populate(final Group destination) {
 		destination.addActor(player);
+		
+		for(int i = 0; i < player.getMinionCount(); i += 1) {
+			destination.addActor(player.getMinion(i));
+		}
 	}
 	
 }

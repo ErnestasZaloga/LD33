@@ -9,14 +9,17 @@ public final class Config {
 	public static final char BoltTower = 'x';
 	public static final char PlayerStartPosition = '@';
 
-	public static final float PlayerTps = 2f; // Player's tiles per second movement
-	public static final float PlayerAnimationJumpDuration = 0.2f;
-	public static final float PlayerAnimationJumpHeight = 0.2f; // Relative to player's height
-	public static final float PlayerRadiusPerMinion = 0.1f; // Relative to vertical percent of the screen
+	public static final float PawnAnimationJumpDuration = 0.2f;
+	public static final float PawnAnimationJumpHeight = 0.2f; // Relative to pawn's height
+	
+	public static final float PlayerTilesPerSecond = 2f;
+	public static final float PlayerRadiusPerMinion = 2f; // Relative to vertical percent of the screen
+	public static final int PlayerInitialMinions = 10;
 	
 	public static final float MinionReactionDelayMin = 0.2f;
 	public static final float MinionReactionDelayMax = 0.5f;
 	public static final float MinionPositionRadiusMin = 0.2f;
+	public static final float MinionTilesPerSecond = 2f;
 	
 	public static final int MoveUpKey = Keys.W;
 	public static final int MoveLeftKey = Keys.A;

@@ -28,10 +28,31 @@ public final class Minion extends Pawn {
 		
 		this.app = app;
 		this.player = player;
+		
+		setRegion(app.getAssets().minionRegion);
+	}
+	
+	public float calcTargetX() {
+		return (player.getX() + player.getWidth() / 2f) + targetX;
+	}
+	
+	public float calcTargetY() {
+		return (player.getPlaneY() + player.getHeight() / 2f) + targetY;
 	}
 	
 	public void begin() {
+		chooseTarget();
+		setPosition(calcTargetX(), calcTargetY());
 		
+		clearActions();
+		state = State.idle;
+		
+		delaySetup();
+		delayTimer = 0f;
+	}
+	
+	public State getState() {
+		return state;
 	}
 
 	@Override
@@ -40,28 +61,45 @@ public final class Minion extends Pawn {
 		
 		if(state == State.idle) {
 			delayTimer += delta;
+			
 			if(delayTimer >= delay) {
 				delayTimer = 0f;
 				delaySetup();
-				
+
 				chooseTarget();
+				startMovement();
 			}
+		}
+		else if(state == State.moving) {
+			if(targetX == getX() && targetY == getY()) {
+				stopMovement();
+			}
+		}
+		else {
+			throw new RuntimeException("invalid minion state");
 		}
 	}
 	
 	private void chooseTarget() {
 		final float radiusOffset = MathUtils.random(Config.MinionPositionRadiusMin, 1f);
 		final float radiusAngle = MathUtils.random(0f, 360f);
-		
-		final float centerPlayerX = player.getX() + player.getWidth() / 2f;
-		final float centerPlayerY = player.getY() + player.getHeight() / 2f;
 		final float radius = player.getMinionRadius();
 
 		tmpVector.set(0f, radius * radiusOffset);
 		tmpVector.rotate(radiusAngle);
 		
-		targetX = centerPlayerX + tmpVector.x;
-		targetY = centerPlayerY + tmpVector.y;
+		targetX = tmpVector.x;
+		targetY = tmpVector.y;
+	}
+	
+	private void startMovement() {
+		state = State.moving;
+		startMovementAnimation();
+	}
+	
+	private void stopMovement() {
+		state = State.idle;
+		endMovementAnimation();
 	}
 	
 	private void delaySetup() {

@@ -3,8 +3,6 @@ package com.ld33.game.pawn;
 import com.badlogic.gdx.utils.Array;
 import com.ld33.App;
 import com.ld33.Config;
-import com.ld33.utils.steps.FloatStep;
-import com.ld33.utils.steps.Steps;
 
 public final class Player extends Pawn {
 
@@ -12,18 +10,6 @@ public final class Player extends Pawn {
 	
 	private int horizontalMovementState;
 	private int verticalMovementState;
-	
-	private float modY;
-	private final FloatStep.Listener modYListener = new FloatStep.Listener() {
-		
-		@Override
-		public void onChange(final FloatStep floatStep,
-							 final float value) {
-			
-			modY = value;
-		}
-		
-	};
 	
 	private final Array<Minion> minions = new Array<Minion>();
 	
@@ -34,14 +20,6 @@ public final class Player extends Pawn {
 	
 	public float getMinionRadius() {
 		return app.wpercent() * Config.PlayerRadiusPerMinion * minions.size;
-	}
-	
-	public float getPlaneY() {
-		return getY();// - (getHeight() * Config.PlayerAnimationJumpHeight) * modY;
-	}
-	
-	public float getJumpDisplacement() {
-		return 0f;//getHeight() * Config.PlayerAnimationJumpHeight * modY;
 	}
 	
 	public void startMoveLeft() {
@@ -95,15 +73,11 @@ public final class Player extends Pawn {
 		final boolean isMoving = isMoving();
 		
 		if(wasMoving && !isMoving) {
-			//clearActions();
-			//addAction(Steps.action(Steps._float(modY, 0, modY * (Config.PlayerAnimationJumpDuration / 2f), modYListener)));
+			endMovementAnimation();
 		}
 		else if(!wasMoving && isMoving) {
-			//addAction(Steps.action(Steps.repeat(Steps.sequence(
-			//			Steps._float(0f, 1f, (Config.PlayerAnimationJumpDuration / 2f), modYListener),
-			//			Steps._float(1f, 0f, (Config.PlayerAnimationJumpDuration / 2f), modYListener)))));
+			startMovementAnimation();
 		}
-		
 	}
 	
 	public boolean isMoving() {
@@ -120,6 +94,7 @@ public final class Player extends Pawn {
 	
 	protected void registerMinion(final Minion minion) {
 		minions.add(minion);
+		minion.begin();
 	}
 	
 	public int getMinionCount() {
@@ -128,18 +103,6 @@ public final class Player extends Pawn {
 	
 	public Minion getMinion(final int index) {
 		return minions.get(index);
-	}
-	
-	@Override
-	public void act(final float delta) {
-		final float jumpHeight = getHeight() * Config.PlayerAnimationJumpHeight;
-		
-		// Important! process before calling act
-		final float realY = getY() - jumpHeight * modY;
-		
-		super.act(delta);
-		
-		//setY(realY + jumpHeight * modY);
 	}
 	
 }
