@@ -83,6 +83,8 @@ public final class PawnManager implements ManagerInterface {
 	}
 
 	public void update(final float delta) {
+		System.out.println("////////////////////////");
+		System.out.println("Frame  y:" + " " + player.getY());
 		// Handle controls
 		{
 			if(Gdx.input.isKeyJustPressed(Config.MoveUpKey)) {
@@ -130,6 +132,7 @@ public final class PawnManager implements ManagerInterface {
 			final float validX = player.getX();
 			final float validY = player.getPlaneY();
 			
+<<<<<<< HEAD
 			player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
 			
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
@@ -138,9 +141,21 @@ public final class PawnManager implements ManagerInterface {
 			
 			player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
 
+=======
+			//X axis
+			player.moveBy(delta * Config.PlayerTps * tileWidth * player.getHorizontalMovementState(), 0f);
 			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
+				player.setX(validX);
+			}
+			System.out.println("Before y:" + " " + player.getY() +" "+ validY);
+			//Y axis
+			player.moveBy(0f, delta * Config.PlayerTps * tileHeight * player.getVerticalMovementState());
+>>>>>>> origin/master
+			if(checkCollision(leftTile, bottomTile, rightTile, topTile)) {
+				System.out.println("collision happened at "+player.getY());
 				player.setY(validY + player.getJumpDisplacement());
 			}
+			System.out.println("After  y:" + " " + player.getY() +" "+ validY);
 		}
 		
 		// Move minions
