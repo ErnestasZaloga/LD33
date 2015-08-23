@@ -211,11 +211,31 @@ public final class PawnManager implements ManagerInterface {
 				final float amountX = delta * tileWidth * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.x;
 				final float amountY = delta * tileHeight * minion.getMovementSpeed() * minion.getMovementSpeedScaler() * tmpVector.y;
 				
+				
+				//Move and check for collisions
+				if(requiredAmountX != 0f) {
+					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
+					minion.moveBy(scaleX * requiredAmountX, 0f);
+					
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setX(validX);
+					}	
+				}
+				if(requiredAmountY != 0f) {
+					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
+					minion.moveBy(0f, scaleY * requiredAmountY);
+
+					if(checkCollision(minion, tileWidth, tileHeight)) {
+						minion.setY(validY + minion.getJumpDisplacement());
+					}
+				}
+				
 				//Make minions attack, if there are enemies nearby
 				//Look for nearby towers
 				float nearestTargetX = 0;
 				float nearestTargetY = 0;
-				float shortestDistance = (float)Math.sqrt((mapData.getTileObjects().get(0).getX()-minion.getX())*(mapData.getTileObjects().get(0).getX()-minion.getX())+(mapData.getTileObjects().get(0).getY()-minion.getPlaneY())*(mapData.getTileObjects().get(0).getY()-minion.getPlaneY()));
+				//float shortestDistance = (float)Math.sqrt((mapData.getTileObjects().get(0).getX()-minion.getX())*(mapData.getTileObjects().get(0).getX()-minion.getX())+(mapData.getTileObjects().get(0).getY()-minion.getPlaneY())*(mapData.getTileObjects().get(0).getY()-minion.getPlaneY()));
+				float shortestDistance = 99999999999999f;  //le magic
 				for(TileObject tower : mapData.getTileObjects()) {
 					float dx = tower.getX()-minion.getX();
 					float dy = tower.getY()-minion.getPlaneY();
@@ -242,23 +262,6 @@ public final class PawnManager implements ManagerInterface {
 					if(shortestDistance <= minion.getAttackRange()) {
 						minion.resetAttackCooldown();
 						projectileManager.createFriendlyAttack(minion, nearestTargetX, nearestTargetY);
-					}
-				}
-				//Move and check for collisions
-				if(requiredAmountX != 0f) {
-					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
-					minion.moveBy(scaleX * requiredAmountX, 0f);
-					
-					if(checkCollision(minion, tileWidth, tileHeight)) {
-						minion.setX(validX);
-					}	
-				}
-				if(requiredAmountY != 0f) {
-					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
-					minion.moveBy(0f, scaleY * requiredAmountY);
-
-					if(checkCollision(minion, tileWidth, tileHeight)) {
-						minion.setY(validY + minion.getJumpDisplacement());
 					}
 				}
 			}

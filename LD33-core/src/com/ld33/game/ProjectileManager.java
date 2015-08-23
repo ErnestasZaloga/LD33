@@ -107,8 +107,8 @@ public class ProjectileManager implements ManagerInterface {
 		Pawn player = gameWorld.getPawnManager().getPlayer();
 		for(final Projectile projectile : projectiles) {
 			//Move
-			float dx = MathUtils.cosDeg(projectile.getRotation() * delta * projectile.getSpeed());
-			float dy = MathUtils.sinDeg(projectile.getRotation() * delta * projectile.getSpeed());
+			float dx = MathUtils.cosDeg(projectile.getRotation()) * delta * projectile.getSpeed();
+			float dy = MathUtils.sinDeg(projectile.getRotation()) * delta * projectile.getSpeed();
 			projectile.moveBy(dx, dy);
 			//Apply scaling
 			float targetScale = 0.8f;
@@ -117,7 +117,7 @@ public class ProjectileManager implements ManagerInterface {
 			projectile.setScale(resultingScale);
 			//Check for collisions with player
 			if(player.getX() <= projectile.getX()+projectile.getWidth() && projectile.getX() <= player.getX()+player.getWidth()) {  //X axis
-				if(player.getY() <= projectile.getY()+projectile.getHeight() && projectile.getY() <= player.getY()+player.getHeight()) {  //Y axis
+				if(player.getPlaneY() <= projectile.getY()+projectile.getHeight() && projectile.getY() <= player.getPlaneY()+player.getHeight()) {  //Y axis
 					player.damagePawn(projectile.getDamage());
 					//Apply special effects
 					//...
@@ -141,8 +141,8 @@ public class ProjectileManager implements ManagerInterface {
 		//Friendly projectiles
 		for(final Projectile projectile : friendlyProjectiles) {
 			//Move
-			float dx = MathUtils.cosDeg(projectile.getRotation() * delta * projectile.getSpeed());
-			float dy = MathUtils.sinDeg(projectile.getRotation() * delta * projectile.getSpeed());
+			float dx = MathUtils.cosDeg(projectile.getRotation()) * delta * projectile.getSpeed();
+			float dy = MathUtils.sinDeg(projectile.getRotation()) * delta * projectile.getSpeed();
 			projectile.moveBy(dx, dy);
 			//Apply scaling
 			float targetScale = 0.8f;
