@@ -6,7 +6,9 @@ import com.ld33.App;
 import com.ld33.Config;
 import com.ld33.game.Projectile.DamageType;
 import com.ld33.game.effects.Effect;
+import com.ld33.game.pawn.Minion;
 import com.ld33.game.pawn.Pawn;
+import com.ld33.game.pawn.Player;
 
 public class ProjectileManager implements ManagerInterface {
 	
@@ -105,7 +107,7 @@ public class ProjectileManager implements ManagerInterface {
 
 	@Override
 	public void update(final float delta) {
-		Pawn player = gameWorld.getPawnManager().getPlayer();
+		Player player = gameWorld.getPawnManager().getPlayer();
 		for(final Projectile projectile : projectiles) {
 			//Move
 			float dx = MathUtils.cosDeg(projectile.getRotation()) * delta * projectile.getSpeed();
@@ -132,7 +134,23 @@ public class ProjectileManager implements ManagerInterface {
 				}
 			}
 			//Check for collisions with pawns TODO
-			//...
+			for(int i=0; i<player.getMinionCount(); i++) {
+				Minion minion = player.getMinion(i);
+				if(minion.getX() <= projectile.getX()+projectile.getWidth() && projectile.getX() <= minion.getX()+player.getWidth()) {  //X axis
+					if(minion.getPlaneY() <= projectile.getY()+projectile.getHeight() && projectile.getY() <= minion.getPlaneY()+minion.getHeight()) {  //Y axis
+						minion.damagePawn(projectile.getDamage());
+						//Apply special effects
+						if(projectile.getDamageType() == DamageType.ICE) {
+							minion.addEffect(new Effect(Config.IceEffectDuration, Config.IceEffectSlowModifier, 0f));
+						} else if(projectile.getDamageType() == DamageType.FIRE) {
+							minion.addEffect(new Effect(Config.FireEffectDuration, 0f, Config.FireEffectDamageOverTick));
+						}
+						
+						projectiles.removeValue(projectile, true);
+						projectile.remove();
+					}
+				}
+			}
 			//Check if max range is reached
 			projectile.increaseDistanceTraveled((float)Math.sqrt((float)(dx*dx+dy*dy)));
 			if(projectile.getDistanceTraveled() >= projectile.getRange()) {

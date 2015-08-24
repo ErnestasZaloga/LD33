@@ -173,7 +173,7 @@ public final class PawnManager implements ManagerInterface {
 			
 			// X axis
 			//player.moveBy(delta * Config.PlayerTilesPerSecond * tileWidth * player.getHorizontalMovementState(), 0f);
-			player.moveBy(delta * player.getMovementSpeed() * tileWidth * player.getHorizontalMovementState() * player.getEffectSlowMultiplier(), 0f);
+			player.moveBy(delta * player.getMovementSpeed() * tileWidth * player.getHorizontalMovementState()/* * player.getEffectSlowMultiplier()*/, 0f);
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setX(validX);
@@ -181,7 +181,7 @@ public final class PawnManager implements ManagerInterface {
 			
 			// Y axis
 			//player.moveBy(0f, delta * Config.PlayerTilesPerSecond * tileHeight * player.getVerticalMovementState());
-			player.moveBy(0f, delta * player.getMovementSpeed() * tileHeight * player.getVerticalMovementState() * player.getEffectSlowMultiplier());
+			player.moveBy(0f, delta * player.getMovementSpeed() * tileHeight * player.getVerticalMovementState()/* * player.getEffectSlowMultiplier()*/);
 			
 			if(checkCollision(player, tileWidth, tileHeight)) {
 				player.setY(validY + player.getJumpDisplacement());
@@ -215,7 +215,7 @@ public final class PawnManager implements ManagerInterface {
 				//Move and check for collisions
 				if(requiredAmountX != 0f) {
 					final float scaleX = Math.min(Math.abs(amountX) / Math.abs(requiredAmountX), 1f);
-					minion.moveBy(scaleX * requiredAmountX  * minion.getEffectSlowMultiplier(), 0f);
+					minion.moveBy(scaleX * requiredAmountX/*  * minion.getEffectSlowMultiplier()*/, 0f);
 					
 					if(checkCollision(minion, tileWidth, tileHeight)) {
 						minion.setX(validX);
@@ -223,7 +223,7 @@ public final class PawnManager implements ManagerInterface {
 				}
 				if(requiredAmountY != 0f) {
 					final float scaleY = Math.min(Math.abs(amountY) / Math.abs(requiredAmountY), 1f);
-					minion.moveBy(0f, scaleY * requiredAmountY  * minion.getEffectSlowMultiplier());
+					minion.moveBy(0f, scaleY * requiredAmountY/*  * minion.getEffectSlowMultiplier()*/);
 
 					if(checkCollision(minion, tileWidth, tileHeight)) {
 						minion.setY(validY + minion.getJumpDisplacement());
@@ -296,8 +296,8 @@ public final class PawnManager implements ManagerInterface {
 				}
 				//Move
 				if(shortestDistance >= enemyMinion.getAttackRange()) {
-				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth * enemyMinion.getEffectSlowMultiplier(),
-						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth * enemyMinion.getEffectSlowMultiplier());
+				enemyMinion.moveBy(enemyMinion.getMovementSpeed()*delta*MathUtils.cosDeg(enemyMinion.getDirection())*tileWidth/* * enemyMinion.getEffectSlowMultiplier()*/,
+						enemyMinion.getMovementSpeed()*delta*MathUtils.sinDeg(enemyMinion.getDirection())*tileWidth/* * enemyMinion.getEffectSlowMultiplier()*/);
 				}
 			}
 		}

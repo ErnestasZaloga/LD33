@@ -118,9 +118,9 @@ public abstract class Pawn extends SpriteActor {
 		return getHeight() * Config.PawnAnimationJumpHeight * modY;
 	}
 	
-	public float getEffectSlowMultiplier() {
+	/*public float getEffectSlowMultiplier() {
 		return effectSlowMultiplier;
-	}
+	}*/
 
 	public void addEffect(Effect e) {
 		effects.add(e);
