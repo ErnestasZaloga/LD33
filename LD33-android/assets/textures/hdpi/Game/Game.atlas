@@ -1,76 +1,286 @@
 
 Game.png
-size: 251,523
+size: 552,396
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-box
+boltTower
   rotate: false
-  xy: 1, 52
-  size: 64, 79
-  orig: 64, 79
+  xy: 252, 203
+  size: 64, 192
+  orig: 64, 192
   offset: 0, 0
   index: -1
-wall
+enemyMeleeMinionBack
   rotate: false
-  xy: 1, 52
-  size: 64, 79
-  orig: 64, 79
+  xy: 474, 15
+  size: 24, 29
+  orig: 24, 29
   offset: 0, 0
   index: -1
-grassTile
+enemyMeleeMinionBackLeft
   rotate: false
-  xy: 67, 67
+  xy: 516, 194
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+enemyMeleeMinionFront
+  rotate: false
+  xy: 488, 51
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+enemyMeleeMinionFrontRight
+  rotate: false
+  xy: 318, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+enemyMeleeMinionRight
+  rotate: false
+  xy: 514, 64
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+enemyRangedMinionBack
+  rotate: false
+  xy: 514, 33
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+enemyRangedMinionBackLeft
+  rotate: false
+  xy: 352, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+enemyRangedMinionFront
+  rotate: false
+  xy: 500, 2
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+enemyRangedMinionFrontRight
+  rotate: false
+  xy: 511, 127
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+enemyRangedMinionRight
+  rotate: false
+  xy: 526, 2
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+grassTile1
+  rotate: false
+  xy: 318, 201
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+grassTile2
+  rotate: false
+  xy: 384, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+house
+  rotate: false
+  xy: 252, 73
+  size: 64, 128
+  orig: 64, 128
+  offset: 0, 0
+  index: -1
 largefont
   rotate: false
-  xy: 1, 133
+  xy: 1, 6
   size: 249, 389
   orig: 249, 389
   offset: 0, 0
   index: -1
-mainCharacter
+minionShadow
   rotate: false
-  xy: 199, 73
-  size: 48, 58
-  orig: 48, 58
+  xy: 383, 115
+  size: 29, 19
+  orig: 29, 19
   offset: 0, 0
   index: -1
-minion
+minionShadowIso
   rotate: false
-  xy: 1, 22
-  size: 23, 28
-  orig: 23, 28
+  xy: 511, 165
+  size: 38, 27
+  orig: 38, 27
+  offset: 0, 0
+  index: -1
+playerBack
+  rotate: false
+  xy: 374, 44
+  size: 54, 67
+  orig: 54, 67
+  offset: 0, 0
+  index: -1
+playerBackLeft
+  rotate: false
+  xy: 318, 113
+  size: 63, 79
+  orig: 63, 79
+  offset: 0, 0
+  index: -1
+playerFront
+  rotate: false
+  xy: 445, 82
+  size: 57, 52
+  orig: 57, 52
+  offset: 0, 0
+  index: -1
+playerFrontRight
+  rotate: false
+  xy: 445, 136
+  size: 64, 63
+  orig: 64, 63
+  offset: 0, 0
+  index: -1
+playerMeleeMinionBack
+  rotate: false
+  xy: 383, 165
+  size: 28, 34
+  orig: 28, 34
+  offset: 0, 0
+  index: -1
+playerMeleeMinionBackLeft
+  rotate: false
+  xy: 516, 353
+  size: 35, 42
+  orig: 35, 42
+  offset: 0, 0
+  index: -1
+playerMeleeMinionFront
+  rotate: false
+  xy: 414, 167
+  size: 29, 32
+  orig: 29, 32
+  offset: 0, 0
+  index: -1
+playerMeleeMinionFrontRight
+  rotate: false
+  xy: 516, 232
+  size: 34, 36
+  orig: 34, 36
+  offset: 0, 0
+  index: -1
+playerMeleeMinionRight
+  rotate: false
+  xy: 460, 46
+  size: 26, 34
+  orig: 26, 34
+  offset: 0, 0
+  index: -1
+playerRangedMinionBack
+  rotate: false
+  xy: 430, 46
+  size: 28, 34
+  orig: 28, 34
+  offset: 0, 0
+  index: -1
+playerRangedMinionBackLeft
+  rotate: false
+  xy: 516, 309
+  size: 35, 42
+  orig: 35, 42
+  offset: 0, 0
+  index: -1
+playerRangedMinionFront
+  rotate: false
+  xy: 414, 134
+  size: 29, 31
+  orig: 29, 31
+  offset: 0, 0
+  index: -1
+playerRangedMinionFrontRight
+  rotate: false
+  xy: 516, 270
+  size: 34, 37
+  orig: 34, 37
+  offset: 0, 0
+  index: -1
+playerRangedMinionRight
+  rotate: false
+  xy: 445, 10
+  size: 27, 34
+  orig: 27, 34
+  offset: 0, 0
+  index: -1
+playerRight
+  rotate: false
+  xy: 318, 40
+  size: 54, 71
+  orig: 54, 71
+  offset: 0, 0
+  index: -1
+playerShadow
+  rotate: false
+  xy: 504, 95
+  size: 46, 30
+  orig: 46, 30
+  offset: 0, 0
+  index: -1
+playerShadowIso
+  rotate: false
+  xy: 386, 1
+  size: 57, 41
+  orig: 57, 41
   offset: 0, 0
   index: -1
 projectile
   rotate: false
-  xy: 199, 67
+  xy: 318, 195
   size: 4, 4
   orig: 4, 4
   offset: 0, 0
   index: -1
 sandTile
   rotate: false
-  xy: 67, 1
-  size: 64, 64
-  orig: 64, 64
+  xy: 252, 1
+  size: 64, 70
+  orig: 64, 70
+  offset: 0, 0
+  index: -1
+spawnTower
+  rotate: false
+  xy: 318, 267
+  size: 64, 128
+  orig: 64, 128
   offset: 0, 0
   index: -1
 tile
   rotate: false
-  xy: 133, 67
+  xy: 450, 201
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-tower
+wall1
   rotate: false
-  xy: 133, 1
-  size: 64, 64
-  orig: 64, 64
+  xy: 384, 267
+  size: 64, 128
+  orig: 64, 128
+  offset: 0, 0
+  index: -1
+wall2
+  rotate: false
+  xy: 450, 267
+  size: 64, 128
+  orig: 64, 128
   offset: 0, 0
   index: -1
