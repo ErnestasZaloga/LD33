@@ -26,6 +26,7 @@ public class MapFactory {
 		
 		for(int i = lines.length - 1, y = 0; i >= 0; i -= 1, y += 1) {
 			final String line = lines[i];
+			boolean previousRegionVariant = i % 2 != 0;
 			
 			for(int ii = 0, x = 0; ii < line.length(); ii += 1, x += 1) {
 				final char ch = line.charAt(ii);
@@ -34,30 +35,62 @@ public class MapFactory {
 				Tile tile = null;
 				
 				if(ch == Config.WallTile) {
-					region = app.getAssets().wallRegion;
+					final TileObject wall = new TileObject(ch, x, y);
+					wall.setRegion(previousRegionVariant ? app.getAssets().wall1Region : app.getAssets().wall2Region);
+					wall.setPosition(x * tileWidth, y * tileHeight);
+					
+					tileObjects.add(wall);
+					
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
 					tile = new Tile(ch, x, y, true);
 				}
+				else if(ch == Config.House) {
+					final TileObject wall = new TileObject(ch, x, y);
+					wall.setRegion(app.getAssets().houseRegion);
+					wall.setPosition(x * tileWidth, y * tileHeight);
+					
+					tileObjects.add(wall);
+					
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
+					tile = new Tile(ch, x, y, true);
+				}
+				else if(ch == Config.Road) {
+					region = app.getAssets().sandTileRegion;
+					tile = new Tile(ch, x, y, false);
+				}
 				else if(ch == Config.GrassTile) {
-					region = app.getAssets().grassTileRegion;
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
 					tile = new Tile(ch, x, y, false);
 				}
 				else if(ch == Config.BoltTower) {
 					final TileObject tower = new TileObject(ch, x, y);
-					region = app.getAssets().towerRegion;
-					tile = tower;
+					tower.setRegion(app.getAssets().boltTowerRegion);
+					tower.setPosition(x * tileWidth, y * tileHeight);
+					
 					tileObjects.add(tower);
+					
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
+					tile = new Tile(ch, x, y, true);
 				}
 				else if(ch == Config.SpawnerTower) {
 					final TileObject tower = new TileObject(ch, x, y);
-					region = app.getAssets().towerRegion;  //TODO select proper texture
-					tile = tower;
+					tower.setRegion(app.getAssets().spawnTowerRegion);
+					tower.setPosition(x * tileWidth, y * tileHeight);
+					
 					tileObjects.add(tower);
+					
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
+					tile = new Tile(ch, x, y, true);
 				}
 				else if(ch == Config.ElementalTower) {
 					final TileObject tower = new TileObject(ch, x, y);
-					region = app.getAssets().towerRegion;  //TODO select proper texture
-					tile = tower;
+					tower.setRegion(app.getAssets().boltTowerRegion); //TODO select proper texture
+					tower.setPosition(x * tileWidth, y * tileHeight);
+					
 					tileObjects.add(tower);
+					
+					region = previousRegionVariant ? app.getAssets().grassTile1Region : app.getAssets().grassTile2Region;
+					tile = new Tile(ch, x, y, true);
 				}
 				else if(ch == Config.PlayerStartPosition) {
 					if(startX != -1 || startY != -1) {
@@ -67,7 +100,7 @@ public class MapFactory {
 					startX = x;
 					startY = y;
 					
-					region = app.getAssets().grassTileRegion;
+					region = previousRegionVariant ? app.getAssets().grassTile2Region : app.getAssets().grassTile2Region;
 					tile = new Tile(ch, x, y, false);
 				}
 				else {
@@ -78,6 +111,7 @@ public class MapFactory {
 				tile.setPosition(x * tileWidth, y * tileHeight);
 				
 				tiles.add(tile);
+				previousRegionVariant = !previousRegionVariant;
 			}
 		}
 

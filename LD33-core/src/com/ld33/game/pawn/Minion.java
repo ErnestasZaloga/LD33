@@ -35,7 +35,7 @@ public final class Minion extends Pawn {
 		this.app = app;
 		this.player = player;
 		
-		setRegion(app.getAssets().minionRegion);
+		setRegion(MathUtils.randomBoolean() ? app.getAssets().playerMeleeMinionFrontRegion : app.getAssets().playerRangedMinionFrontRegion);
 	}
 	
 	protected void cachePlayerPosition() {

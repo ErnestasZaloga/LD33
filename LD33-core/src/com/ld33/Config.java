@@ -10,6 +10,8 @@ public final class Config {
 	public static final char SpawnerTower = 's';
 	public static final char ElementalTower = 'e';
 	public static final char PlayerStartPosition = '@';
+	public static final char Road = 'r';
+	public static final char House = 'h';
 	
 	public static final float MeleeAttackRange = 25f;
 	public static final float MeleeAttackInterval = 0.8f;
@@ -27,7 +29,7 @@ public final class Config {
 	public static final float PlayerMaxHealth = 100;
 	public static final float PlayerTilesPerSecond = 2f;
 	public static final float PlayerMinionRadius = 20f; // Relative to vertical percent of the screen
-	public static final int PlayerInitialMinions = 1;
+	public static final int PlayerInitialMinions = 10;
 	public static final float PlayerSmallMinionRadiusScalerMin = 0.2f;
 	public static final float PlayerSmallMinionRadiusScalerMax = 0.35f;
 	public static final float PlayerMidMinionRadiusScalerMin = 0.5f;

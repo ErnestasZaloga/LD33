@@ -11,6 +11,7 @@ import com.ld33.game.environment.EnvironmentManager;
 import com.ld33.game.environment.MapData;
 import com.ld33.game.environment.MapFactory;
 import com.ld33.game.environment.Tile;
+import com.ld33.game.environment.TileObject;
 import com.ld33.game.pawn.Pawn;
 import com.ld33.game.pawn.PawnManager;
 import com.ld33.game.pawn.Player;
@@ -72,6 +73,12 @@ public class GameWorld extends Group {
 				
 				contentGroup.addActor(tile);
 			}
+		}
+		
+		// Fill objects
+		final Array<TileObject> tileObjects = mapData.getTileObjects();
+		for(int i = 0; i < tileObjects.size; i += 1) {
+			contentGroup.addActor(tileObjects.get(i));
 		}
 		
 		// Init managers

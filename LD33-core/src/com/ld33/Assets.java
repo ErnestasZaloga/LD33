@@ -2,6 +2,7 @@ package com.ld33;
 
 import com.workforfood.devkit.RAssets;
 import com.workforfood.devkit.Resolution;
+import com.workforfood.devkit.TextureRegionExt;
 
 public final class Assets extends RAssets {
 

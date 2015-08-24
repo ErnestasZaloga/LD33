@@ -1,5 +1,6 @@
 package com.ld33.game.pawn;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.ld33.App;
 import com.ld33.Config;
 
@@ -17,7 +18,7 @@ public class EnemyMinion extends Pawn {
 		this.app = app;
 		this.player = player;
 		
-		setRegion(app.getAssets().minionRegion);
+		setRegion(MathUtils.randomBoolean() ? app.getAssets().enemyMeleeMinionFrontRegion : app.getAssets().enemyRangedMinionFrontRegion);
 	}
 	
 	@Override

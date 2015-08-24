@@ -20,7 +20,7 @@ public final class Player extends Pawn {
 		super(Config.PlayerMaxHealth);
 		
 		this.app = app;
-		setRegion(app.getAssets().mainCharacterRegion);
+		setRegion(app.getAssets().playerFrontRegion);
 	}
 	
 	public float chooseMinionRadius() {
@@ -112,6 +112,22 @@ public final class Player extends Pawn {
 		}
 		else if(!wasMoving && isMoving) {
 			startMovementAnimation();
+		}
+		
+		if(horizontal == 1 && vertical == 0) {
+			setRegion(app.getAssets().playerRightRegion);
+		}
+		else if(horizontal == 1 && vertical == -1) {
+			setRegion(app.getAssets().playerFrontRightRegion);
+		}
+		else if(horizontal == 1 && vertical == 1) {
+			setRegion(app.getAssets().playerBackLeftRegion);
+		}
+		else if(horizontal == 0 && vertical == 1) {
+			setRegion(app.getAssets().playerBackRegion);
+		}
+		else if(horizontal == 0 && vertical == -1) {
+			setRegion(app.getAssets().playerFrontRegion);
 		}
 	}
 	
